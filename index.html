@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -7,16 +7,33 @@
 <style>
   html, body { margin: 0; padding: 0; background: #F4F8F5; }
   #root { min-height: 100vh; }
-  .boot { font-family: system-ui, sans-serif; color: #4A5B52; text-align: center; padding: 80px 20px; }
+  .boot { font-family: system-ui, sans-serif; color: #4A5B52; text-align: center; padding: 80px 24px; line-height: 1.5; }
+  .boot b { color: #16261F; }
 </style>
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
 <div id="root"><div class="boot">Loading Sport4All…</div></div>
-<script type="text/babel" data-presets="react">
-const { useState, useEffect } = React;
+
+<script>
+window.__boot = function () {
+"use strict";
+
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+var R = React;
+var useState = R.useState,
+  useEffect = R.useEffect;
 
 // ---------------------------------------------------------------------------
 // Sport4All — concept prototype (V3, parent-verified, percentage-with-cap)
@@ -27,10 +44,10 @@ const { useState, useEffect } = React;
 // foot of the screen to demonstrate the eligible and ineligible paths.
 // ---------------------------------------------------------------------------
 
-const FEE_CAP = 150;          // € per child per season (placeholder — set by scheme)
-const SUBSIDY_PCT = 90;       // % of fee covered, up to the cap
+var FEE_CAP = 150; // € per child per season (placeholder — set by scheme)
+var SUBSIDY_PCT = 90; // % of fee covered, up to the cap
 
-const C = {
+var C = {
   ink: "#16261F",
   inkSoft: "#4A5B52",
   pine: "#0F5C3F",
@@ -41,629 +58,1628 @@ const C = {
   line: "#DDE7E0",
   white: "#FFFFFF",
   bg: "#F4F8F5",
-  coral: "#C7502F",
+  coral: "#C7502F"
 };
-
-const COUNTIES = ["Carlow","Cavan","Clare","Cork","Donegal","Dublin","Galway","Kerry","Kildare","Kilkenny","Laois","Leitrim","Limerick","Longford","Louth","Mayo","Meath","Monaghan","Offaly","Roscommon","Sligo","Tipperary","Waterford","Westmeath","Wexford","Wicklow"];
-const AGE_BANDS = ["Under 8","Under 10","Under 12","Under 14","Under 16","Under 18"];
-
+var COUNTIES = ["Carlow", "Cavan", "Clare", "Cork", "Donegal", "Dublin", "Galway", "Kerry", "Kildare", "Kilkenny", "Laois", "Leitrim", "Limerick", "Longford", "Louth", "Mayo", "Meath", "Monaghan", "Offaly", "Roscommon", "Sligo", "Tipperary", "Waterford", "Westmeath", "Wexford", "Wicklow"];
+var AGE_BANDS = ["Under 8", "Under 10", "Under 12", "Under 14", "Under 16", "Under 18"];
 function makeCode() {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  const block = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
-  return `${block()}-${block()}`;
+  var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  var block = function block() {
+    return Array.from({
+      length: 4
+    }, function () {
+      return chars[Math.floor(Math.random() * chars.length)];
+    }).join("");
+  };
+  return "".concat(block(), "-").concat(block());
 }
 function expiryDate() {
-  const d = new Date();
+  var d = new Date();
   d.setDate(d.getDate() + 90);
-  return d.toLocaleDateString("en-IE", { day: "numeric", month: "long", year: "numeric" });
+  return d.toLocaleDateString("en-IE", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
 }
 
 // Open real, always-resolving destinations so nothing dead-ends.
-function openUrl(url) { try { window.open(url, "_blank", "noopener,noreferrer"); } catch (e) {} }
-function mapsSearch(q) { openUrl("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q)); }
-function webSearch(q) { openUrl("https://www.google.com/search?q=" + encodeURIComponent(q)); }
-
+function openUrl(url) {
+  try {
+    window.open(url, "_blank", "noopener,noreferrer");
+  } catch (e) {}
+}
+function mapsSearch(q) {
+  openUrl("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q));
+}
+function webSearch(q) {
+  openUrl("https://www.google.com/search?q=" + encodeURIComponent(q));
+}
 function Sport4All() {
-  const [screen, setScreen] = useState("landing");     // landing | consent | checking | result | options | club
-  const [demoOutcome, setDemoOutcome] = useState("eligible"); // eligible | ineligible
-  const [eligible, setEligible] = useState(null);
-  const [code, setCode] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [county, setCounty] = useState("");
-  const [ageBand, setAgeBand] = useState("");
-  const [privacyOpen, setPrivacyOpen] = useState(false);
-
-  const expiry = expiryDate();
-
-  useEffect(() => {
+  var _useState = useState("landing"),
+    _useState2 = _slicedToArray(_useState, 2),
+    screen = _useState2[0],
+    setScreen = _useState2[1]; // landing | consent | checking | result | options | club
+  var _useState3 = useState("eligible"),
+    _useState4 = _slicedToArray(_useState3, 2),
+    demoOutcome = _useState4[0],
+    setDemoOutcome = _useState4[1]; // eligible | ineligible
+  var _useState5 = useState(null),
+    _useState6 = _slicedToArray(_useState5, 2),
+    eligible = _useState6[0],
+    setEligible = _useState6[1];
+  var _useState7 = useState(""),
+    _useState8 = _slicedToArray(_useState7, 2),
+    code = _useState8[0],
+    setCode = _useState8[1];
+  var _useState9 = useState(false),
+    _useState0 = _slicedToArray(_useState9, 2),
+    copied = _useState0[0],
+    setCopied = _useState0[1];
+  var _useState1 = useState(""),
+    _useState10 = _slicedToArray(_useState1, 2),
+    county = _useState10[0],
+    setCounty = _useState10[1];
+  var _useState11 = useState(""),
+    _useState12 = _slicedToArray(_useState11, 2),
+    ageBand = _useState12[0],
+    setAgeBand = _useState12[1];
+  var _useState13 = useState(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    privacyOpen = _useState14[0],
+    setPrivacyOpen = _useState14[1];
+  var expiry = expiryDate();
+  useEffect(function () {
     if (screen !== "checking") return;
-    const t = setTimeout(() => {
-      const ok = demoOutcome === "eligible";
+    var t = setTimeout(function () {
+      var ok = demoOutcome === "eligible";
       setEligible(ok);
       if (ok) setCode(makeCode());
       setScreen("result");
     }, 1600);
-    return () => clearTimeout(t);
+    return function () {
+      return clearTimeout(t);
+    };
   }, [screen, demoOutcome]);
-
-  const go = (s) => { setCopied(false); setScreen(s); };
-
-  return (
-    <div style={{ minHeight: "100vh", background: C.bg, display: "flex", justifyContent: "center", color: C.ink }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        .s4a { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
-        .s4a button { font-family: inherit; cursor: pointer; }
-        .s4a button:focus-visible, .s4a a:focus-visible, .s4a select:focus-visible { outline: 3px solid ${C.amber}; outline-offset: 2px; }
-        .btn-primary { transition: transform .12s ease, filter .12s ease; }
-        .btn-primary:hover { filter: brightness(1.06); }
-        .btn-primary:active { transform: translateY(1px); }
-        .card-tap { transition: border-color .15s ease, transform .12s ease, box-shadow .15s ease; }
-        .card-tap:hover { border-color: ${C.pine}; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,92,63,.10); }
-        .link-u { text-decoration: underline; text-underline-offset: 3px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-        .rise { animation: rise .35s ease both; }
-        @media (prefers-reduced-motion: reduce) { .rise, .btn-primary, .card-tap { animation: none; transition: none; } }
-      `}</style>
-
-      <div className="s4a" style={{ width: "100%", maxWidth: 430, minHeight: "100vh", background: C.white, display: "flex", flexDirection: "column", position: "relative", boxShadow: "0 0 60px rgba(10,69,48,.06)" }}>
-
-        {screen === "landing" && <Landing go={go} openPrivacy={() => setPrivacyOpen(true)} />}
-        {screen === "consent" && <Consent go={go} />}
-        {screen === "checking" && <Checking />}
-        {screen === "result" && (
-          eligible
-            ? <ResultEligible code={code} expiry={expiry} copied={copied} setCopied={setCopied} go={go} />
-            : <ResultIneligible go={go} />
-        )}
-        {screen === "options" && <Options county={county} setCounty={setCounty} ageBand={ageBand} setAgeBand={setAgeBand} go={go} />}
-        {screen === "club" && <ClubPortal go={go} />}
-
-        {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
-
-        <DemoBar screen={screen} demoOutcome={demoOutcome} setDemoOutcome={setDemoOutcome} go={go} />
-      </div>
-    </div>
-  );
+  var go = function go(s) {
+    setCopied(false);
+    setScreen(s);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      minHeight: "100vh",
+      background: C.bg,
+      display: "flex",
+      justifyContent: "center",
+      color: C.ink
+    }
+  }, /*#__PURE__*/React.createElement("style", null, "\n        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');\n        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }\n        .s4a { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }\n        .s4a button { font-family: inherit; cursor: pointer; }\n        .s4a button:focus-visible, .s4a a:focus-visible, .s4a select:focus-visible { outline: 3px solid ".concat(C.amber, "; outline-offset: 2px; }\n        .btn-primary { transition: transform .12s ease, filter .12s ease; }\n        .btn-primary:hover { filter: brightness(1.06); }\n        .btn-primary:active { transform: translateY(1px); }\n        .card-tap { transition: border-color .15s ease, transform .12s ease, box-shadow .15s ease; }\n        .card-tap:hover { border-color: ").concat(C.pine, "; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,92,63,.10); }\n        .link-u { text-decoration: underline; text-underline-offset: 3px; }\n        @keyframes spin { to { transform: rotate(360deg); } }\n        @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }\n        .rise { animation: rise .35s ease both; }\n        @media (prefers-reduced-motion: reduce) { .rise, .btn-primary, .card-tap { animation: none; transition: none; } }\n      ")), /*#__PURE__*/React.createElement("div", {
+    className: "s4a",
+    style: {
+      width: "100%",
+      maxWidth: 430,
+      minHeight: "100vh",
+      background: C.white,
+      display: "flex",
+      flexDirection: "column",
+      position: "relative",
+      boxShadow: "0 0 60px rgba(10,69,48,.06)"
+    }
+  }, screen === "landing" && /*#__PURE__*/React.createElement(Landing, {
+    go: go,
+    openPrivacy: function openPrivacy() {
+      return setPrivacyOpen(true);
+    }
+  }), screen === "consent" && /*#__PURE__*/React.createElement(Consent, {
+    go: go
+  }), screen === "checking" && /*#__PURE__*/React.createElement(Checking, null), screen === "result" && (eligible ? /*#__PURE__*/React.createElement(ResultEligible, {
+    code: code,
+    expiry: expiry,
+    copied: copied,
+    setCopied: setCopied,
+    go: go
+  }) : /*#__PURE__*/React.createElement(ResultIneligible, {
+    go: go
+  })), screen === "options" && /*#__PURE__*/React.createElement(Options, {
+    county: county,
+    setCounty: setCounty,
+    ageBand: ageBand,
+    setAgeBand: setAgeBand,
+    go: go
+  }), screen === "club" && /*#__PURE__*/React.createElement(ClubPortal, {
+    go: go
+  }), privacyOpen && /*#__PURE__*/React.createElement(PrivacyModal, {
+    onClose: function onClose() {
+      return setPrivacyOpen(false);
+    }
+  }), /*#__PURE__*/React.createElement(DemoBar, {
+    screen: screen,
+    demoOutcome: demoOutcome,
+    setDemoOutcome: setDemoOutcome,
+    go: go
+  })));
 }
 
 // --------------------------------------------------------------------------- shared bits
 
-function Brand({ small }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-      <div style={{ width: small ? 28 : 34, height: small ? 28 : 34, borderRadius: 10, background: C.pine, display: "grid", placeItems: "center", flexShrink: 0 }}>
-        <svg width={small ? 16 : 19} height={small ? 16 : 19} viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="9" stroke={C.white} strokeWidth="2" />
-          <path d="M12 3v18M3 12h18" stroke={C.white} strokeWidth="1.4" opacity=".5" />
-          <path d="M12 7l1.6 3.3 3.6.5-2.6 2.5.6 3.6L12 15.7 8.8 17.4l.6-3.6L6.8 11.3l3.6-.5L12 7z" fill={C.amber} />
-        </svg>
-      </div>
-      <div>
-        <div style={{ fontWeight: 800, fontSize: small ? 16 : 19, letterSpacing: "-.02em" }}>Sport4All</div>
-        {!small && <div style={{ fontSize: 11, color: C.inkSoft, fontWeight: 500 }}>Sport Ireland · with your Local Sports Partnership</div>}
-      </div>
-    </div>
-  );
+function Brand(_ref) {
+  var small = _ref.small;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 10
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: small ? 28 : 34,
+      height: small ? 28 : 34,
+      borderRadius: 10,
+      background: C.pine,
+      display: "grid",
+      placeItems: "center",
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: small ? 16 : 19,
+    height: small ? 16 : 19,
+    viewBox: "0 0 24 24",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "9",
+    stroke: C.white,
+    strokeWidth: "2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M12 3v18M3 12h18",
+    stroke: C.white,
+    strokeWidth: "1.4",
+    opacity: ".5"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M12 7l1.6 3.3 3.6.5-2.6 2.5.6 3.6L12 15.7 8.8 17.4l.6-3.6L6.8 11.3l3.6-.5L12 7z",
+    fill: C.amber
+  }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontWeight: 800,
+      fontSize: small ? 16 : 19,
+      letterSpacing: "-.02em"
+    }
+  }, "Sport4All"), !small && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: C.inkSoft,
+      fontWeight: 500
+    }
+  }, "Sport Ireland \xB7 with your Local Sports Partnership")));
 }
-
-function PrimaryButton({ children, onClick, style }) {
-  return (
-    <button className="btn-primary" onClick={onClick}
-      style={{ width: "100%", background: C.pine, color: C.white, border: "none", borderRadius: 14, padding: "16px 18px", fontSize: 16, fontWeight: 700, ...style }}>
-      {children}
-    </button>
-  );
+function PrimaryButton(_ref2) {
+  var children = _ref2.children,
+    onClick = _ref2.onClick,
+    style = _ref2.style;
+  return /*#__PURE__*/React.createElement("button", {
+    className: "btn-primary",
+    onClick: onClick,
+    style: _objectSpread({
+      width: "100%",
+      background: C.pine,
+      color: C.white,
+      border: "none",
+      borderRadius: 14,
+      padding: "16px 18px",
+      fontSize: 16,
+      fontWeight: 700
+    }, style)
+  }, children);
 }
-
-function Header({ go, back }) {
-  return (
-    <div style={{ padding: "18px 22px 8px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-      <Brand small />
-      {back && (
-        <button onClick={() => go(back)} style={{ background: "none", border: "none", color: C.inkSoft, fontSize: 14, fontWeight: 600 }}>
-          ← Back
-        </button>
-      )}
-    </div>
-  );
+function Header(_ref3) {
+  var go = _ref3.go,
+    back = _ref3.back;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "18px 22px 8px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
+    }
+  }, /*#__PURE__*/React.createElement(Brand, {
+    small: true
+  }), back && /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return go(back);
+    },
+    style: {
+      background: "none",
+      border: "none",
+      color: C.inkSoft,
+      fontSize: 14,
+      fontWeight: 600
+    }
+  }, "\u2190 Back"));
 }
 
 // --------------------------------------------------------------------------- Screen 1: Landing
 
-function Landing({ go, openPrivacy }) {
-  return (
-    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-      <div style={{ padding: "26px 22px 0" }}><Brand /></div>
-
-      <div style={{ padding: "26px 22px 0" }}>
-        <h1 style={{ fontSize: 27, lineHeight: 1.15, fontWeight: 800, letterSpacing: "-.03em", margin: 0 }}>
-          Get your child into a local sports club.
-        </h1>
-        <p style={{ fontSize: 15.5, lineHeight: 1.55, color: C.inkSoft, marginTop: 14 }}>
-          This scheme helps with the cost of getting your child playing. If you qualify, most of the club
-          membership fee is covered. The check takes under a minute.
-        </p>
-      </div>
-
-      <div style={{ margin: "22px 22px 0", background: C.mist, borderRadius: 16, padding: "16px 18px" }}>
-        {[
-          "No paperwork, no income details",
-          "We check your status, never your child’s",
-          "Your club never sees your details",
-        ].map((t) => (
-          <div key={t} style={{ display: "flex", gap: 11, alignItems: "flex-start", padding: "7px 0" }}>
-            <Tick />
-            <span style={{ fontSize: 14.5, fontWeight: 600 }}>{t}</span>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ padding: "24px 22px 0", marginTop: "auto" }}>
-        <PrimaryButton onClick={() => go("consent")}>
-          Check if you qualify — sign in with MyGovID
-        </PrimaryButton>
-        <button onClick={() => go("options")}
-          style={{ width: "100%", background: "none", border: "none", color: C.pine, fontSize: 15, fontWeight: 700, padding: "16px 0 4px" }}
-          className="link-u">
-          Just show me clubs near me
-        </button>
-      </div>
-
-      <div style={{ padding: "16px 22px 24px", borderTop: `1px solid ${C.line}`, marginTop: 18, display: "flex", flexWrap: "wrap", gap: "6px 16px" }}>
-        {[
-          { t: "Your Local Sports Partnership", fn: () => webSearch("Local Sports Partnership Ireland find your LSP") },
-          { t: "Citizens Information", fn: () => openUrl("https://www.citizensinformation.ie") },
-          { t: "How we use your data", fn: openPrivacy },
-        ].map(({ t, fn }) => (
-          <button key={t} onClick={fn} className="link-u"
-            style={{ fontSize: 12, color: C.inkSoft, fontWeight: 600, background: "none", border: "none", padding: 0 }}>
-            {t}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
+function Landing(_ref4) {
+  var go = _ref4.go,
+    openPrivacy = _ref4.openPrivacy;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rise",
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "26px 22px 0"
+    }
+  }, /*#__PURE__*/React.createElement(Brand, null)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "26px 22px 0"
+    }
+  }, /*#__PURE__*/React.createElement("h1", {
+    style: {
+      fontSize: 27,
+      lineHeight: 1.15,
+      fontWeight: 800,
+      letterSpacing: "-.03em",
+      margin: 0
+    }
+  }, "Get your child into a local sports club."), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 15.5,
+      lineHeight: 1.55,
+      color: C.inkSoft,
+      marginTop: 14
+    }
+  }, "This scheme helps with the cost of getting your child playing. If you qualify, most of the club membership fee is covered. The check takes under a minute.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      margin: "22px 22px 0",
+      background: C.mist,
+      borderRadius: 16,
+      padding: "16px 18px"
+    }
+  }, ["No paperwork, no income details", "We check your status, never your child’s", "Your club never sees your details"].map(function (t) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: t,
+      style: {
+        display: "flex",
+        gap: 11,
+        alignItems: "flex-start",
+        padding: "7px 0"
+      }
+    }, /*#__PURE__*/React.createElement(Tick, null), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 14.5,
+        fontWeight: 600
+      }
+    }, t));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "24px 22px 0",
+      marginTop: "auto"
+    }
+  }, /*#__PURE__*/React.createElement(PrimaryButton, {
+    onClick: function onClick() {
+      return go("consent");
+    }
+  }, "Check if you qualify \u2014 sign in with MyGovID"), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return go("options");
+    },
+    style: {
+      width: "100%",
+      background: "none",
+      border: "none",
+      color: C.pine,
+      fontSize: 15,
+      fontWeight: 700,
+      padding: "16px 0 4px"
+    },
+    className: "link-u"
+  }, "Just show me clubs near me")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "16px 22px 24px",
+      borderTop: "1px solid ".concat(C.line),
+      marginTop: 18,
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "6px 16px"
+    }
+  }, [{
+    t: "Your Local Sports Partnership",
+    fn: function fn() {
+      return webSearch("Local Sports Partnership Ireland find your LSP");
+    }
+  }, {
+    t: "Citizens Information",
+    fn: function fn() {
+      return openUrl("https://www.citizensinformation.ie");
+    }
+  }, {
+    t: "How we use your data",
+    fn: openPrivacy
+  }].map(function (_ref5) {
+    var t = _ref5.t,
+      fn = _ref5.fn;
+    return /*#__PURE__*/React.createElement("button", {
+      key: t,
+      onClick: fn,
+      className: "link-u",
+      style: {
+        fontSize: 12,
+        color: C.inkSoft,
+        fontWeight: 600,
+        background: "none",
+        border: "none",
+        padding: 0
+      }
+    }, t);
+  })));
 }
-
 function Tick() {
-  return (
-    <div style={{ width: 20, height: 20, borderRadius: 999, background: C.pine, display: "grid", placeItems: "center", flexShrink: 0, marginTop: 1 }}>
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 6" stroke={C.white} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 20,
+      height: 20,
+      borderRadius: 999,
+      background: C.pine,
+      display: "grid",
+      placeItems: "center",
+      flexShrink: 0,
+      marginTop: 1
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "11",
+    height: "11",
+    viewBox: "0 0 24 24",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M5 12l4.5 4.5L19 6",
+    stroke: C.white,
+    strokeWidth: "3",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  })));
 }
 
 // --------------------------------------------------------------------------- Screen 2: Consent
 
-function Consent({ go }) {
-  return (
-    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-      <Header go={go} back="landing" />
-      <div style={{ padding: "18px 22px 0" }}>
-        <div style={{ width: 46, height: 46, borderRadius: 13, background: C.amberSoft, display: "grid", placeItems: "center", marginBottom: 18 }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V5l7-3z" stroke={C.amber} strokeWidth="2" strokeLinejoin="round" /><path d="M9 12l2 2 4-4" stroke={C.amber} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </div>
-        <h2 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-.02em", margin: 0 }}>Your consent</h2>
-        <p style={{ fontSize: 15, lineHeight: 1.6, color: C.inkSoft, marginTop: 14 }}>
-          To check if you qualify, we’ll confirm with the Department of Social Protection whether you hold a
-          qualifying payment or card. We only receive a simple <strong style={{ color: C.ink }}>Yes or No</strong>.
-        </p>
-        <p style={{ fontSize: 15, lineHeight: 1.6, color: C.inkSoft, marginTop: 12 }}>
-          We never see your income, and your child’s details are never part of this check.
-        </p>
-      </div>
-
-      <div style={{ padding: "22px 22px 0", marginTop: "auto" }}>
-        <PrimaryButton onClick={() => go("checking")}>I agree — check now</PrimaryButton>
-        <p style={{ fontSize: 11.5, lineHeight: 1.5, color: C.inkSoft, marginTop: 16, padding: "0 2px" }}>
-          This is a proposed scheme. The data-sharing arrangement between Sport Ireland and the Department of
-          Social Protection is an assumption of the concept and is not yet in place.
-        </p>
-      </div>
-      <div style={{ height: 20 }} />
-    </div>
-  );
+function Consent(_ref6) {
+  var go = _ref6.go;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rise",
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement(Header, {
+    go: go,
+    back: "landing"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "18px 22px 0"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 46,
+      height: 46,
+      borderRadius: 13,
+      background: C.amberSoft,
+      display: "grid",
+      placeItems: "center",
+      marginBottom: 18
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "24",
+    height: "24",
+    viewBox: "0 0 24 24",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M12 2l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V5l7-3z",
+    stroke: C.amber,
+    strokeWidth: "2",
+    strokeLinejoin: "round"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M9 12l2 2 4-4",
+    stroke: C.amber,
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }))), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: 22,
+      fontWeight: 800,
+      letterSpacing: "-.02em",
+      margin: 0
+    }
+  }, "Your consent"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 15,
+      lineHeight: 1.6,
+      color: C.inkSoft,
+      marginTop: 14
+    }
+  }, "To check if you qualify, we\u2019ll confirm with the Department of Social Protection whether you hold a qualifying payment or card. We only receive a simple ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: C.ink
+    }
+  }, "Yes or No"), "."), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 15,
+      lineHeight: 1.6,
+      color: C.inkSoft,
+      marginTop: 12
+    }
+  }, "We never see your income, and your child\u2019s details are never part of this check.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "22px 22px 0",
+      marginTop: "auto"
+    }
+  }, /*#__PURE__*/React.createElement(PrimaryButton, {
+    onClick: function onClick() {
+      return go("checking");
+    }
+  }, "I agree \u2014 check now"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 11.5,
+      lineHeight: 1.5,
+      color: C.inkSoft,
+      marginTop: 16,
+      padding: "0 2px"
+    }
+  }, "This is a proposed scheme. The data-sharing arrangement between Sport Ireland and the Department of Social Protection is an assumption of the concept and is not yet in place.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 20
+    }
+  }));
 }
 
 // --------------------------------------------------------------------------- Checking state
 
 function Checking() {
-  return (
-    <div style={{ flex: 1, display: "grid", placeItems: "center", padding: 40 }}>
-      <div style={{ textAlign: "center" }}>
-        <div style={{ width: 44, height: 44, border: `4px solid ${C.mist}`, borderTopColor: C.pine, borderRadius: 999, margin: "0 auto 20px", animation: "spin .8s linear infinite" }} />
-        <div style={{ fontSize: 16, fontWeight: 700 }}>Checking securely…</div>
-        <div style={{ fontSize: 13, color: C.inkSoft, marginTop: 6 }}>Confirming your status with MyGovID</div>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: "grid",
+      placeItems: "center",
+      padding: 40
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 44,
+      height: 44,
+      border: "4px solid ".concat(C.mist),
+      borderTopColor: C.pine,
+      borderRadius: 999,
+      margin: "0 auto 20px",
+      animation: "spin .8s linear infinite"
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 16,
+      fontWeight: 700
+    }
+  }, "Checking securely\u2026"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      color: C.inkSoft,
+      marginTop: 6
+    }
+  }, "Confirming your status with MyGovID")));
 }
 
 // --------------------------------------------------------------------------- Screen 3a: Eligible
 
-function ResultEligible({ code, expiry, copied, setCopied, go }) {
-  const copy = () => {
-    try { navigator.clipboard?.writeText(code); } catch (e) {}
+function ResultEligible(_ref7) {
+  var code = _ref7.code,
+    expiry = _ref7.expiry,
+    copied = _ref7.copied,
+    setCopied = _ref7.setCopied,
+    go = _ref7.go;
+  var copy = function copy() {
+    try {
+      var _navigator$clipboard;
+      (_navigator$clipboard = navigator.clipboard) === null || _navigator$clipboard === void 0 || _navigator$clipboard.writeText(code);
+    } catch (e) {}
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(function () {
+      return setCopied(false);
+    }, 2000);
   };
-  return (
-    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-      <Header go={go} />
-      <div style={{ padding: "8px 22px 0", textAlign: "center" }}>
-        <div style={{ width: 60, height: 60, borderRadius: 999, background: C.pine, display: "grid", placeItems: "center", margin: "6px auto 16px" }}>
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 6" stroke={C.white} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </div>
-        <h2 style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-.02em", margin: 0 }}>You qualify.</h2>
-        <p style={{ fontSize: 15, lineHeight: 1.55, color: C.inkSoft, marginTop: 10 }}>
-          This scheme covers up to <strong style={{ color: C.ink }}>{SUBSIDY_PCT}%</strong> of your child’s club
-          membership fee, to a maximum of <strong style={{ color: C.ink }}>€{FEE_CAP}</strong> per child per season.
-        </p>
-      </div>
-
-      {/* ticket */}
-      <div style={{ margin: "22px 22px 0", position: "relative" }}>
-        <div style={{ background: C.pineDeep, borderRadius: 18, padding: "22px 22px 20px", color: C.white }}>
-          <div style={{ fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", opacity: .7, fontWeight: 700 }}>Your fee-support code</div>
-          <div style={{ fontSize: 30, fontWeight: 800, letterSpacing: ".06em", marginTop: 8, fontVariantNumeric: "tabular-nums" }}>{code}</div>
-          <div style={{ borderTop: `1px dashed rgba(255,255,255,.28)`, margin: "16px 0", position: "relative" }} />
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5, opacity: .85 }}>
-            <span>Covers up to {SUBSIDY_PCT}% · max €{FEE_CAP}</span>
-            <span>Expires {expiry}</span>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ padding: "18px 22px 0" }}>
-        <button className="btn-primary" onClick={copy}
-          style={{ width: "100%", background: copied ? C.mist : C.amber, color: copied ? C.pine : "#3A2200", border: "none", borderRadius: 14, padding: "14px", fontSize: 15, fontWeight: 700 }}>
-          {copied ? "Copied ✓" : "Copy code"}
-        </button>
-      </div>
-
-      <div style={{ margin: "22px 22px 0", background: C.mist, borderRadius: 16, padding: "18px" }}>
-        <div style={{ fontSize: 13, fontWeight: 800, textTransform: "uppercase", letterSpacing: ".08em", color: C.inkSoft, marginBottom: 12 }}>How it works</div>
-        {[
-          "Find a participating local club your child wants to join.",
-          "Give this code to the club.",
-          "The club applies it to your child’s fee and claims the balance through the scheme.",
-        ].map((t, i) => (
-          <div key={i} style={{ display: "flex", gap: 12, padding: "6px 0", alignItems: "flex-start" }}>
-            <div style={{ width: 22, height: 22, borderRadius: 999, background: C.pine, color: C.white, fontSize: 12, fontWeight: 800, display: "grid", placeItems: "center", flexShrink: 0 }}>{i + 1}</div>
-            <span style={{ fontSize: 14.5, lineHeight: 1.45 }}>{t}</span>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ padding: "18px 22px 26px", marginTop: "auto" }}>
-        <div style={{ background: C.mist, borderRadius: 16, padding: "16px 18px" }}>
-          <div style={{ fontSize: 15, fontWeight: 800 }}>Now find the right club</div>
-          <div style={{ fontSize: 13.5, color: C.inkSoft, marginTop: 4, lineHeight: 1.5 }}>
-            Fee support is one part. Free taster sessions, welcoming clubs and gear swaps near you help with
-            the rest of getting started.
-          </div>
-          <button className="btn-primary" onClick={() => go("options")}
-            style={{ width: "100%", marginTop: 14, background: C.pine, color: C.white, border: "none", borderRadius: 12, padding: "13px", fontSize: 14.5, fontWeight: 700 }}>
-            Show clubs and sessions near me
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rise",
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement(Header, {
+    go: go
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "8px 22px 0",
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 60,
+      height: 60,
+      borderRadius: 999,
+      background: C.pine,
+      display: "grid",
+      placeItems: "center",
+      margin: "6px auto 16px"
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "30",
+    height: "30",
+    viewBox: "0 0 24 24",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M5 12l4.5 4.5L19 6",
+    stroke: C.white,
+    strokeWidth: "3",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }))), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: 26,
+      fontWeight: 800,
+      letterSpacing: "-.02em",
+      margin: 0
+    }
+  }, "You qualify."), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 15,
+      lineHeight: 1.55,
+      color: C.inkSoft,
+      marginTop: 10
+    }
+  }, "This scheme covers up to ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: C.ink
+    }
+  }, SUBSIDY_PCT, "%"), " of your child\u2019s club membership fee, to a maximum of ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: C.ink
+    }
+  }, "\u20AC", FEE_CAP), " per child per season.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      margin: "22px 22px 0",
+      position: "relative"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: C.pineDeep,
+      borderRadius: 18,
+      padding: "22px 22px 20px",
+      color: C.white
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      letterSpacing: ".14em",
+      textTransform: "uppercase",
+      opacity: .7,
+      fontWeight: 700
+    }
+  }, "Your fee-support code"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 30,
+      fontWeight: 800,
+      letterSpacing: ".06em",
+      marginTop: 8,
+      fontVariantNumeric: "tabular-nums"
+    }
+  }, code), /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderTop: "1px dashed rgba(255,255,255,.28)",
+      margin: "16px 0",
+      position: "relative"
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      fontSize: 12.5,
+      opacity: .85
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "Covers up to ", SUBSIDY_PCT, "% \xB7 max \u20AC", FEE_CAP), /*#__PURE__*/React.createElement("span", null, "Expires ", expiry)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "18px 22px 0"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "btn-primary",
+    onClick: copy,
+    style: {
+      width: "100%",
+      background: copied ? C.mist : C.amber,
+      color: copied ? C.pine : "#3A2200",
+      border: "none",
+      borderRadius: 14,
+      padding: "14px",
+      fontSize: 15,
+      fontWeight: 700
+    }
+  }, copied ? "Copied ✓" : "Copy code")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      margin: "22px 22px 0",
+      background: C.mist,
+      borderRadius: 16,
+      padding: "18px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: 800,
+      textTransform: "uppercase",
+      letterSpacing: ".08em",
+      color: C.inkSoft,
+      marginBottom: 12
+    }
+  }, "How it works"), ["Find a participating local club your child wants to join.", "Give this code to the club.", "The club applies it to your child’s fee and claims the balance through the scheme."].map(function (t, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: "flex",
+        gap: 12,
+        padding: "6px 0",
+        alignItems: "flex-start"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: 22,
+        height: 22,
+        borderRadius: 999,
+        background: C.pine,
+        color: C.white,
+        fontSize: 12,
+        fontWeight: 800,
+        display: "grid",
+        placeItems: "center",
+        flexShrink: 0
+      }
+    }, i + 1), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 14.5,
+        lineHeight: 1.45
+      }
+    }, t));
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "18px 22px 26px",
+      marginTop: "auto"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: C.mist,
+      borderRadius: 16,
+      padding: "16px 18px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 15,
+      fontWeight: 800
+    }
+  }, "Now find the right club"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13.5,
+      color: C.inkSoft,
+      marginTop: 4,
+      lineHeight: 1.5
+    }
+  }, "Fee support is one part. Free taster sessions, welcoming clubs and gear swaps near you help with the rest of getting started."), /*#__PURE__*/React.createElement("button", {
+    className: "btn-primary",
+    onClick: function onClick() {
+      return go("options");
+    },
+    style: {
+      width: "100%",
+      marginTop: 14,
+      background: C.pine,
+      color: C.white,
+      border: "none",
+      borderRadius: 12,
+      padding: "13px",
+      fontSize: 14.5,
+      fontWeight: 700
+    }
+  }, "Show clubs and sessions near me"))));
 }
 
 // --------------------------------------------------------------------------- Screen 3b: Ineligible
 
-function ResultIneligible({ go }) {
-  return (
-    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-      <Header go={go} />
-      <div style={{ padding: "10px 22px 0" }}>
-        <div style={{ width: 56, height: 56, borderRadius: 16, background: C.amberSoft, display: "grid", placeItems: "center", marginBottom: 18 }}>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke={C.amber} strokeWidth="2" /><path d="M12 8v5M8 12h8" stroke={C.amber} strokeWidth="2" strokeLinecap="round" /></svg>
-        </div>
-        <h2 style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-.02em", margin: 0, lineHeight: 1.15 }}>
-          Here’s how to get your child playing near you.
-        </h2>
-        <p style={{ fontSize: 15, lineHeight: 1.6, color: C.inkSoft, marginTop: 12 }}>
-          You don’t qualify for fee support right now, but there’s plenty near you, whatever your budget.
-        </p>
-      </div>
-      <div style={{ padding: "24px 22px 0", marginTop: "auto" }}>
-        <PrimaryButton onClick={() => go("options")}>See what’s near me</PrimaryButton>
-      </div>
-      <div style={{ height: 24 }} />
-    </div>
-  );
+function ResultIneligible(_ref8) {
+  var go = _ref8.go;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rise",
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement(Header, {
+    go: go
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "10px 22px 0"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 56,
+      height: 56,
+      borderRadius: 16,
+      background: C.amberSoft,
+      display: "grid",
+      placeItems: "center",
+      marginBottom: 18
+    }
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "28",
+    height: "28",
+    viewBox: "0 0 24 24",
+    fill: "none"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "9",
+    stroke: C.amber,
+    strokeWidth: "2"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M12 8v5M8 12h8",
+    stroke: C.amber,
+    strokeWidth: "2",
+    strokeLinecap: "round"
+  }))), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: 24,
+      fontWeight: 800,
+      letterSpacing: "-.02em",
+      margin: 0,
+      lineHeight: 1.15
+    }
+  }, "Here\u2019s how to get your child playing near you."), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 15,
+      lineHeight: 1.6,
+      color: C.inkSoft,
+      marginTop: 12
+    }
+  }, "You don\u2019t qualify for fee support right now, but there\u2019s plenty near you, whatever your budget.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "24px 22px 0",
+      marginTop: "auto"
+    }
+  }, /*#__PURE__*/React.createElement(PrimaryButton, {
+    onClick: function onClick() {
+      return go("options");
+    }
+  }, "See what\u2019s near me")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 24
+    }
+  }));
 }
 
 // --------------------------------------------------------------------------- Screen 4: Options
 
-function Options({ county, setCounty, ageBand, setAgeBand, go }) {
-  const kildare = county === "Kildare";
-  const place = county || "Ireland";
-  const ageBit = ageBand ? ` ${ageBand.toLowerCase()}` : "";
-
-  const searchClubs = () =>
-    mapsSearch(county ? `children's sports clubs${ageBit} in ${county}, Ireland` : "children's sports clubs near me");
-
-  const cards = [
-    {
-      title: "Talk to your local sports coordinator",
-      body: "Connect with your Local Sports Partnership about clubs and support in your area.",
-      icon: "chat",
-      action: () => webSearch(`${county ? county + " " : ""}Local Sports Partnership contact`),
+function Options(_ref9) {
+  var county = _ref9.county,
+    setCounty = _ref9.setCounty,
+    ageBand = _ref9.ageBand,
+    setAgeBand = _ref9.setAgeBand,
+    go = _ref9.go;
+  var kildare = county === "Kildare";
+  var place = county || "Ireland";
+  var ageBit = ageBand ? " ".concat(ageBand.toLowerCase()) : "";
+  var searchClubs = function searchClubs() {
+    return mapsSearch(county ? "children's sports clubs".concat(ageBit, " in ").concat(county, ", Ireland") : "children's sports clubs near me");
+  };
+  var cards = [{
+    title: "Talk to your local sports coordinator",
+    body: "Connect with your Local Sports Partnership about clubs and support in your area.",
+    icon: "chat",
+    action: function action() {
+      return webSearch("".concat(county ? county + " " : "", "Local Sports Partnership contact"));
+    }
+  }, {
+    title: "Free community taster sessions",
+    body: kildare ? "Free sessions run by Kildare Sports Partnership. Nearest Community Sport Hubs are in Athy and Monasterevin — there isn’t one in every town, so we show the closest to you." : county ? "Free sessions run by your Local Sports Partnership in ".concat(county, ". If your town has none, we\u2019ll show the nearest.") : "Free sessions run by your Local Sports Partnership. If your town has none, we’ll show the nearest.",
+    icon: "run",
+    action: function action() {
+      return kildare ? mapsSearch("Community Sport Hub Athy Monasterevin Kildare") : webSearch("".concat(county ? county + " " : "", "Sports Partnership community sport hub taster sessions"));
+    }
+  }, {
+    title: "Inclusive clubs & gear swaps",
+    body: "Welcoming clubs and second-hand kit networks near you, so cost of gear isn’t a barrier either.",
+    icon: "swap",
+    action: function action() {
+      return mapsSearch("inclusive sports clubs and second-hand kit in ".concat(place));
+    }
+  }, {
+    title: "Citizens Information",
+    body: "Broader guidance on financial supports you might be missing, with a local phone number.",
+    icon: "info",
+    action: function action() {
+      return openUrl("https://www.citizensinformation.ie");
+    }
+  }];
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rise",
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement(Header, {
+    go: go,
+    back: "landing"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "10px 22px 0"
+    }
+  }, /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: 23,
+      fontWeight: 800,
+      letterSpacing: "-.02em",
+      margin: 0
+    }
+  }, "Clubs and sessions near you"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 14.5,
+      color: C.inkSoft,
+      marginTop: 8,
+      lineHeight: 1.5
+    }
+  }, "Tell us where you are so we can show the closest options.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "16px 22px 0",
+      display: "flex",
+      gap: 10
+    }
+  }, /*#__PURE__*/React.createElement(Field, {
+    label: "County"
+  }, /*#__PURE__*/React.createElement("select", {
+    value: county,
+    onChange: function onChange(e) {
+      return setCounty(e.target.value);
     },
-    {
-      title: "Free community taster sessions",
-      body: kildare
-        ? "Free sessions run by Kildare Sports Partnership. Nearest Community Sport Hubs are in Athy and Monasterevin — there isn’t one in every town, so we show the closest to you."
-        : county
-          ? `Free sessions run by your Local Sports Partnership in ${county}. If your town has none, we’ll show the nearest.`
-          : "Free sessions run by your Local Sports Partnership. If your town has none, we’ll show the nearest.",
-      icon: "run",
-      action: () => kildare
-        ? mapsSearch("Community Sport Hub Athy Monasterevin Kildare")
-        : webSearch(`${county ? county + " " : ""}Sports Partnership community sport hub taster sessions`),
+    style: selectStyle
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "Select\u2026"), COUNTIES.map(function (c) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: c
+    }, c);
+  }))), /*#__PURE__*/React.createElement(Field, {
+    label: "Child\u2019s age"
+  }, /*#__PURE__*/React.createElement("select", {
+    value: ageBand,
+    onChange: function onChange(e) {
+      return setAgeBand(e.target.value);
     },
-    {
-      title: "Inclusive clubs & gear swaps",
-      body: "Welcoming clubs and second-hand kit networks near you, so cost of gear isn’t a barrier either.",
-      icon: "swap",
-      action: () => mapsSearch(`inclusive sports clubs and second-hand kit in ${place}`),
-    },
-    {
-      title: "Citizens Information",
-      body: "Broader guidance on financial supports you might be missing, with a local phone number.",
-      icon: "info",
-      action: () => openUrl("https://www.citizensinformation.ie"),
-    },
-  ];
-
-  return (
-    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-      <Header go={go} back="landing" />
-      <div style={{ padding: "10px 22px 0" }}>
-        <h2 style={{ fontSize: 23, fontWeight: 800, letterSpacing: "-.02em", margin: 0 }}>Clubs and sessions near you</h2>
-        <p style={{ fontSize: 14.5, color: C.inkSoft, marginTop: 8, lineHeight: 1.5 }}>
-          Tell us where you are so we can show the closest options.
-        </p>
-      </div>
-
-      <div style={{ padding: "16px 22px 0", display: "flex", gap: 10 }}>
-        <Field label="County">
-          <select value={county} onChange={(e) => setCounty(e.target.value)} style={selectStyle}>
-            <option value="">Select…</option>
-            {COUNTIES.map((c) => <option key={c}>{c}</option>)}
-          </select>
-        </Field>
-        <Field label="Child’s age">
-          <select value={ageBand} onChange={(e) => setAgeBand(e.target.value)} style={selectStyle}>
-            <option value="">Select…</option>
-            {AGE_BANDS.map((a) => <option key={a}>{a}</option>)}
-          </select>
-        </Field>
-      </div>
-
-      <div style={{ padding: "14px 22px 0" }}>
-        <PrimaryButton onClick={searchClubs} style={{ padding: "14px", fontSize: 15 }}>
-          {county ? `Show clubs in ${county}` : "Show clubs near me"}
-        </PrimaryButton>
-      </div>
-
-      <div style={{ padding: "12px 22px 6px" }}>
-        <div style={{ fontSize: 12, fontWeight: 800, textTransform: "uppercase", letterSpacing: ".08em", color: C.inkSoft }}>Or get help another way</div>
-      </div>
-
-      <div style={{ padding: "6px 22px 26px", display: "flex", flexDirection: "column", gap: 12 }}>
-        {cards.map((c) => (
-          <button key={c.title} className="card-tap" onClick={c.action}
-            style={{ textAlign: "left", background: C.white, border: `1.5px solid ${C.line}`, borderRadius: 16, padding: "16px 16px", display: "flex", gap: 14, alignItems: "flex-start", width: "100%" }}>
-            <div style={{ width: 40, height: 40, borderRadius: 11, background: C.mist, display: "grid", placeItems: "center", flexShrink: 0 }}>
-              <OptIcon name={c.icon} />
-            </div>
-            <div>
-              <div style={{ fontSize: 15.5, fontWeight: 700, letterSpacing: "-.01em" }}>{c.title}</div>
-              <div style={{ fontSize: 13.5, color: C.inkSoft, marginTop: 4, lineHeight: 1.5 }}>{c.body}</div>
-            </div>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ marginLeft: "auto", marginTop: 4, flexShrink: 0 }}><path d="M9 6l6 6-6 6" stroke={C.inkSoft} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
+    style: selectStyle
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "Select\u2026"), AGE_BANDS.map(function (a) {
+    return /*#__PURE__*/React.createElement("option", {
+      key: a
+    }, a);
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "14px 22px 0"
+    }
+  }, /*#__PURE__*/React.createElement(PrimaryButton, {
+    onClick: searchClubs,
+    style: {
+      padding: "14px",
+      fontSize: 15
+    }
+  }, county ? "Show clubs in ".concat(county) : "Show clubs near me")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "12px 22px 6px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 800,
+      textTransform: "uppercase",
+      letterSpacing: ".08em",
+      color: C.inkSoft
+    }
+  }, "Or get help another way")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "6px 22px 26px",
+      display: "flex",
+      flexDirection: "column",
+      gap: 12
+    }
+  }, cards.map(function (c) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: c.title,
+      className: "card-tap",
+      onClick: c.action,
+      style: {
+        textAlign: "left",
+        background: C.white,
+        border: "1.5px solid ".concat(C.line),
+        borderRadius: 16,
+        padding: "16px 16px",
+        display: "flex",
+        gap: 14,
+        alignItems: "flex-start",
+        width: "100%"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: 40,
+        height: 40,
+        borderRadius: 11,
+        background: C.mist,
+        display: "grid",
+        placeItems: "center",
+        flexShrink: 0
+      }
+    }, /*#__PURE__*/React.createElement(OptIcon, {
+      name: c.icon
+    })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 15.5,
+        fontWeight: 700,
+        letterSpacing: "-.01em"
+      }
+    }, c.title), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13.5,
+        color: C.inkSoft,
+        marginTop: 4,
+        lineHeight: 1.5
+      }
+    }, c.body)), /*#__PURE__*/React.createElement("svg", {
+      width: "18",
+      height: "18",
+      viewBox: "0 0 24 24",
+      fill: "none",
+      style: {
+        marginLeft: "auto",
+        marginTop: 4,
+        flexShrink: 0
+      }
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M9 6l6 6-6 6",
+      stroke: C.inkSoft,
+      strokeWidth: "2",
+      strokeLinecap: "round",
+      strokeLinejoin: "round"
+    })));
+  })));
 }
-
-function Field({ label, children }) {
-  return (
-    <label style={{ flex: 1 }}>
-      <div style={{ fontSize: 12, fontWeight: 700, color: C.inkSoft, marginBottom: 6 }}>{label}</div>
-      {children}
-    </label>
-  );
+function Field(_ref0) {
+  var label = _ref0.label,
+    children = _ref0.children;
+  return /*#__PURE__*/React.createElement("label", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 700,
+      color: C.inkSoft,
+      marginBottom: 6
+    }
+  }, label), children);
 }
-const selectStyle = { width: "100%", padding: "12px 12px", borderRadius: 12, border: `1.5px solid ${C.line}`, fontSize: 14.5, fontWeight: 600, background: C.white, color: C.ink, fontFamily: "inherit", appearance: "none" };
-
-function OptIcon({ name }) {
-  const s = { stroke: C.pine, strokeWidth: 2, fill: "none", strokeLinecap: "round", strokeLinejoin: "round" };
-  if (name === "chat") return <svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 3v-3H4z" {...s} /></svg>;
-  if (name === "run") return <svg width="20" height="20" viewBox="0 0 24 24"><circle cx="15" cy="4.5" r="1.8" {...s} /><path d="M13 9l-3 3 2 3-1 5M13 9l4 1 2 3M13 9L8 8" {...s} /></svg>;
-  if (name === "swap") return <svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3" {...s} /></svg>;
-  return <svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" {...s} /><path d="M12 11v5M12 8h.01" {...s} /></svg>;
+var selectStyle = {
+  width: "100%",
+  padding: "12px 12px",
+  borderRadius: 12,
+  border: "1.5px solid ".concat(C.line),
+  fontSize: 14.5,
+  fontWeight: 600,
+  background: C.white,
+  color: C.ink,
+  fontFamily: "inherit",
+  appearance: "none"
+};
+function OptIcon(_ref1) {
+  var name = _ref1.name;
+  var s = {
+    stroke: C.pine,
+    strokeWidth: 2,
+    fill: "none",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  };
+  if (name === "chat") return /*#__PURE__*/React.createElement("svg", {
+    width: "20",
+    height: "20",
+    viewBox: "0 0 24 24"
+  }, /*#__PURE__*/React.createElement("path", _extends({
+    d: "M4 5h16v11H9l-4 3v-3H4z"
+  }, s)));
+  if (name === "run") return /*#__PURE__*/React.createElement("svg", {
+    width: "20",
+    height: "20",
+    viewBox: "0 0 24 24"
+  }, /*#__PURE__*/React.createElement("circle", _extends({
+    cx: "15",
+    cy: "4.5",
+    r: "1.8"
+  }, s)), /*#__PURE__*/React.createElement("path", _extends({
+    d: "M13 9l-3 3 2 3-1 5M13 9l4 1 2 3M13 9L8 8"
+  }, s)));
+  if (name === "swap") return /*#__PURE__*/React.createElement("svg", {
+    width: "20",
+    height: "20",
+    viewBox: "0 0 24 24"
+  }, /*#__PURE__*/React.createElement("path", _extends({
+    d: "M4 8h13l-3-3M20 16H7l3 3"
+  }, s)));
+  return /*#__PURE__*/React.createElement("svg", {
+    width: "20",
+    height: "20",
+    viewBox: "0 0 24 24"
+  }, /*#__PURE__*/React.createElement("circle", _extends({
+    cx: "12",
+    cy: "12",
+    r: "9"
+  }, s)), /*#__PURE__*/React.createElement("path", _extends({
+    d: "M12 11v5M12 8h.01"
+  }, s)));
 }
 
 // --------------------------------------------------------------------------- Screen 5: Club portal
 
-function ClubPortal({ go }) {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [enteredCode, setEnteredCode] = useState("");
-  const [fee, setFee] = useState("");
-  const [result, setResult] = useState(null);
-
-  const redeem = () => {
-    const f = parseFloat(fee);
+function ClubPortal(_ref10) {
+  var go = _ref10.go;
+  var _useState15 = useState(false),
+    _useState16 = _slicedToArray(_useState15, 2),
+    loggedIn = _useState16[0],
+    setLoggedIn = _useState16[1];
+  var _useState17 = useState(""),
+    _useState18 = _slicedToArray(_useState17, 2),
+    enteredCode = _useState18[0],
+    setEnteredCode = _useState18[1];
+  var _useState19 = useState(""),
+    _useState20 = _slicedToArray(_useState19, 2),
+    fee = _useState20[0],
+    setFee = _useState20[1];
+  var _useState21 = useState(null),
+    _useState22 = _slicedToArray(_useState21, 2),
+    result = _useState22[0],
+    setResult = _useState22[1];
+  var redeem = function redeem() {
+    var f = parseFloat(fee);
     if (!enteredCode.trim() || !f || f <= 0) return;
-    const covered = Math.min(f * (SUBSIDY_PCT / 100), FEE_CAP);
-    setResult({ fee: f, covered: Math.round(covered * 100) / 100, balance: Math.round((f - covered) * 100) / 100 });
+    var covered = Math.min(f * (SUBSIDY_PCT / 100), FEE_CAP);
+    setResult({
+      fee: f,
+      covered: Math.round(covered * 100) / 100,
+      balance: Math.round((f - covered) * 100) / 100
+    });
   };
-
   if (!loggedIn) {
-    return (
-      <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-        <Header go={go} back="landing" />
-        <div style={{ padding: "14px 22px 0" }}>
-          <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, letterSpacing: ".1em", textTransform: "uppercase" }}>Club portal</div>
-          <h2 style={{ fontSize: 23, fontWeight: 800, letterSpacing: "-.02em", margin: "6px 0 0" }}>Club sign in</h2>
-          <p style={{ fontSize: 14, color: C.inkSoft, marginTop: 8 }}>For participating clubs to redeem family codes.</p>
-        </div>
-        <div style={{ padding: "20px 22px 0", display: "flex", flexDirection: "column", gap: 12 }}>
-          <TextField label="Club email" placeholder="secretary@yourclub.ie" />
-          <TextField label="Password" placeholder="••••••••" type="password" />
-        </div>
-        <div style={{ padding: "20px 22px 0", marginTop: "auto" }}>
-          <PrimaryButton onClick={() => setLoggedIn(true)}>Sign in</PrimaryButton>
-        </div>
-        <div style={{ height: 24 }} />
-      </div>
-    );
+    return /*#__PURE__*/React.createElement("div", {
+      className: "rise",
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement(Header, {
+      go: go,
+      back: "landing"
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        padding: "14px 22px 0"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        fontWeight: 700,
+        color: C.amber,
+        letterSpacing: ".1em",
+        textTransform: "uppercase"
+      }
+    }, "Club portal"), /*#__PURE__*/React.createElement("h2", {
+      style: {
+        fontSize: 23,
+        fontWeight: 800,
+        letterSpacing: "-.02em",
+        margin: "6px 0 0"
+      }
+    }, "Club sign in"), /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontSize: 14,
+        color: C.inkSoft,
+        marginTop: 8
+      }
+    }, "For participating clubs to redeem family codes.")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        padding: "20px 22px 0",
+        display: "flex",
+        flexDirection: "column",
+        gap: 12
+      }
+    }, /*#__PURE__*/React.createElement(TextField, {
+      label: "Club email",
+      placeholder: "secretary@yourclub.ie"
+    }), /*#__PURE__*/React.createElement(TextField, {
+      label: "Password",
+      placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+      type: "password"
+    })), /*#__PURE__*/React.createElement("div", {
+      style: {
+        padding: "20px 22px 0",
+        marginTop: "auto"
+      }
+    }, /*#__PURE__*/React.createElement(PrimaryButton, {
+      onClick: function onClick() {
+        return setLoggedIn(true);
+      }
+    }, "Sign in")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        height: 24
+      }
+    }));
   }
-
-  return (
-    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-      <Header go={go} back="landing" />
-      <div style={{ padding: "10px 22px 0" }}>
-        <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, letterSpacing: ".1em", textTransform: "uppercase" }}>Club portal</div>
-        <h2 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-.02em", margin: "6px 0 0" }}>Redeem a code</h2>
-      </div>
-
-      <div style={{ padding: "16px 22px 0", display: "flex", flexDirection: "column", gap: 12 }}>
-        <TextField label="Family’s code" placeholder="XXXX-XXXX" value={enteredCode} onChange={setEnteredCode} mono />
-        <TextField label="Child’s membership fee (€)" placeholder="e.g. 120" value={fee} onChange={setFee} type="number" />
-        <PrimaryButton onClick={redeem} style={{ padding: "14px", fontSize: 15 }}>Apply code</PrimaryButton>
-      </div>
-
-      {result && (
-        <div className="rise" style={{ margin: "18px 22px 0", border: `1.5px solid ${C.pine}`, borderRadius: 16, overflow: "hidden" }}>
-          <Row label="Membership fee" value={`€${result.fee.toFixed(2)}`} />
-          <Row label={`Covered by scheme (up to ${SUBSIDY_PCT}%, max €${FEE_CAP})`} value={`− €${result.covered.toFixed(2)}`} accent />
-          <div style={{ display: "flex", justifyContent: "space-between", padding: "14px 16px", background: C.pine, color: C.white }}>
-            <span style={{ fontWeight: 700, fontSize: 14 }}>Balance the club claims</span>
-            <span style={{ fontWeight: 800, fontSize: 16 }}>€{result.covered.toFixed(2)}</span>
-          </div>
-        </div>
-      )}
-      <div style={{ margin: "8px 22px 0", fontSize: 11.5, color: C.inkSoft, lineHeight: 1.5 }}>
-        Fees are capped to prevent inflation of stated fees. The family pays the remaining €{result ? result.balance.toFixed(2) : "—"}.
-      </div>
-
-      {/* dashboard */}
-      <div style={{ padding: "20px 22px 26px", marginTop: "auto" }}>
-        <div style={{ fontSize: 12, fontWeight: 800, textTransform: "uppercase", letterSpacing: ".08em", color: C.inkSoft, marginBottom: 12 }}>This season</div>
-        <div style={{ display: "flex", gap: 10 }}>
-          <Tile n="24" label="Codes redeemed" />
-          <Tile n="21" label="Families supported" />
-        </div>
-        <div style={{ marginTop: 10, background: C.amberSoft, borderRadius: 14, padding: "16px 18px", border: `1.5px solid ${C.amber}` }}>
-          <div style={{ fontSize: 30, fontWeight: 800, color: C.coral, lineHeight: 1 }}>38</div>
-          <div style={{ fontSize: 13, fontWeight: 700, marginTop: 6 }}>Cost-barrier flags in your area this season</div>
-          <div style={{ fontSize: 11.5, color: C.inkSoft, marginTop: 4, lineHeight: 1.45 }}>
-            The demand signal — anonymised, for your LSP’s funding case. No child is ever named or tracked.
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rise",
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement(Header, {
+    go: go,
+    back: "landing"
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "10px 22px 0"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 700,
+      color: C.amber,
+      letterSpacing: ".1em",
+      textTransform: "uppercase"
+    }
+  }, "Club portal"), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontSize: 22,
+      fontWeight: 800,
+      letterSpacing: "-.02em",
+      margin: "6px 0 0"
+    }
+  }, "Redeem a code")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "16px 22px 0",
+      display: "flex",
+      flexDirection: "column",
+      gap: 12
+    }
+  }, /*#__PURE__*/React.createElement(TextField, {
+    label: "Family\u2019s code",
+    placeholder: "XXXX-XXXX",
+    value: enteredCode,
+    onChange: setEnteredCode,
+    mono: true
+  }), /*#__PURE__*/React.createElement(TextField, {
+    label: "Child\u2019s membership fee (\u20AC)",
+    placeholder: "e.g. 120",
+    value: fee,
+    onChange: setFee,
+    type: "number"
+  }), /*#__PURE__*/React.createElement(PrimaryButton, {
+    onClick: redeem,
+    style: {
+      padding: "14px",
+      fontSize: 15
+    }
+  }, "Apply code")), result && /*#__PURE__*/React.createElement("div", {
+    className: "rise",
+    style: {
+      margin: "18px 22px 0",
+      border: "1.5px solid ".concat(C.pine),
+      borderRadius: 16,
+      overflow: "hidden"
+    }
+  }, /*#__PURE__*/React.createElement(Row, {
+    label: "Membership fee",
+    value: "\u20AC".concat(result.fee.toFixed(2))
+  }), /*#__PURE__*/React.createElement(Row, {
+    label: "Covered by scheme (up to ".concat(SUBSIDY_PCT, "%, max \u20AC").concat(FEE_CAP, ")"),
+    value: "\u2212 \u20AC".concat(result.covered.toFixed(2)),
+    accent: true
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "14px 16px",
+      background: C.pine,
+      color: C.white
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontWeight: 700,
+      fontSize: 14
+    }
+  }, "Balance the club claims"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontWeight: 800,
+      fontSize: 16
+    }
+  }, "\u20AC", result.covered.toFixed(2)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      margin: "8px 22px 0",
+      fontSize: 11.5,
+      color: C.inkSoft,
+      lineHeight: 1.5
+    }
+  }, "Fees are capped to prevent inflation of stated fees. The family pays the remaining \u20AC", result ? result.balance.toFixed(2) : "—", "."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "20px 22px 26px",
+      marginTop: "auto"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 800,
+      textTransform: "uppercase",
+      letterSpacing: ".08em",
+      color: C.inkSoft,
+      marginBottom: 12
+    }
+  }, "This season"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 10
+    }
+  }, /*#__PURE__*/React.createElement(Tile, {
+    n: "24",
+    label: "Codes redeemed"
+  }), /*#__PURE__*/React.createElement(Tile, {
+    n: "21",
+    label: "Families supported"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 10,
+      background: C.amberSoft,
+      borderRadius: 14,
+      padding: "16px 18px",
+      border: "1.5px solid ".concat(C.amber)
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 30,
+      fontWeight: 800,
+      color: C.coral,
+      lineHeight: 1
+    }
+  }, "38"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: 700,
+      marginTop: 6
+    }
+  }, "Cost-barrier flags in your area this season"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      color: C.inkSoft,
+      marginTop: 4,
+      lineHeight: 1.45
+    }
+  }, "The demand signal \u2014 anonymised, for your LSP\u2019s funding case. No child is ever named or tracked."))));
 }
-
-function TextField({ label, placeholder, value, onChange, type = "text", mono }) {
-  return (
-    <label>
-      <div style={{ fontSize: 12, fontWeight: 700, color: C.inkSoft, marginBottom: 6 }}>{label}</div>
-      <input type={type} placeholder={placeholder} value={value ?? ""} onChange={onChange ? (e) => onChange(e.target.value) : undefined}
-        style={{ width: "100%", padding: "13px 14px", borderRadius: 12, border: `1.5px solid ${C.line}`, fontSize: 15, fontWeight: 600, fontFamily: mono ? "ui-monospace, monospace" : "inherit", letterSpacing: mono ? ".08em" : "normal", color: C.ink, background: C.white }} />
-    </label>
-  );
+function TextField(_ref11) {
+  var label = _ref11.label,
+    placeholder = _ref11.placeholder,
+    value = _ref11.value,
+    onChange = _ref11.onChange,
+    _ref11$type = _ref11.type,
+    type = _ref11$type === void 0 ? "text" : _ref11$type,
+    mono = _ref11.mono;
+  return /*#__PURE__*/React.createElement("label", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 700,
+      color: C.inkSoft,
+      marginBottom: 6
+    }
+  }, label), /*#__PURE__*/React.createElement("input", {
+    type: type,
+    placeholder: placeholder,
+    value: value !== null && value !== void 0 ? value : "",
+    onChange: onChange ? function (e) {
+      return onChange(e.target.value);
+    } : undefined,
+    style: {
+      width: "100%",
+      padding: "13px 14px",
+      borderRadius: 12,
+      border: "1.5px solid ".concat(C.line),
+      fontSize: 15,
+      fontWeight: 600,
+      fontFamily: mono ? "ui-monospace, monospace" : "inherit",
+      letterSpacing: mono ? ".08em" : "normal",
+      color: C.ink,
+      background: C.white
+    }
+  }));
 }
-function Row({ label, value, accent }) {
-  return (
-    <div style={{ display: "flex", justifyContent: "space-between", padding: "13px 16px", borderBottom: `1px solid ${C.line}` }}>
-      <span style={{ fontSize: 13.5, color: C.inkSoft, fontWeight: 600, maxWidth: "70%" }}>{label}</span>
-      <span style={{ fontSize: 14.5, fontWeight: 700, color: accent ? C.pine : C.ink }}>{value}</span>
-    </div>
-  );
+function Row(_ref12) {
+  var label = _ref12.label,
+    value = _ref12.value,
+    accent = _ref12.accent;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "13px 16px",
+      borderBottom: "1px solid ".concat(C.line)
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 13.5,
+      color: C.inkSoft,
+      fontWeight: 600,
+      maxWidth: "70%"
+    }
+  }, label), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 14.5,
+      fontWeight: 700,
+      color: accent ? C.pine : C.ink
+    }
+  }, value));
 }
-function Tile({ n, label }) {
-  return (
-    <div style={{ flex: 1, background: C.mist, borderRadius: 14, padding: "16px 14px" }}>
-      <div style={{ fontSize: 28, fontWeight: 800, color: C.pine, lineHeight: 1 }}>{n}</div>
-      <div style={{ fontSize: 12.5, fontWeight: 600, color: C.inkSoft, marginTop: 6 }}>{label}</div>
-    </div>
-  );
+function Tile(_ref13) {
+  var n = _ref13.n,
+    label = _ref13.label;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      background: C.mist,
+      borderRadius: 14,
+      padding: "16px 14px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 28,
+      fontWeight: 800,
+      color: C.pine,
+      lineHeight: 1
+    }
+  }, n), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12.5,
+      fontWeight: 600,
+      color: C.inkSoft,
+      marginTop: 6
+    }
+  }, label));
 }
 
 // --------------------------------------------------------------------------- Privacy note
 
-function PrivacyModal({ onClose }) {
-  return (
-    <div onClick={onClose}
-      style={{ position: "absolute", inset: 0, background: "rgba(10,69,48,.45)", display: "flex", alignItems: "flex-end", zIndex: 20 }}>
-      <div className="rise" onClick={(e) => e.stopPropagation()}
-        style={{ background: C.white, borderRadius: "20px 20px 0 0", padding: "22px 22px 26px", width: "100%", maxHeight: "80%", overflowY: "auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-          <h3 style={{ fontSize: 19, fontWeight: 800, margin: 0 }}>How we use your data</h3>
-          <button onClick={onClose} style={{ border: "none", background: C.mist, borderRadius: 999, width: 30, height: 30, fontSize: 16, fontWeight: 700, color: C.inkSoft }}>×</button>
-        </div>
-        {[
-          ["What we collect", "Only your Yes/No eligibility result, a rough location (county or Eircode) and your child’s age group."],
-          ["What we never collect", "No income figures, no PPSN, no medical card number, no name or details of your child."],
-          ["The check is on you, not your child", "MyGovID confirms your own qualifying status with the Department of Social Protection. Your child is only the beneficiary and is never entered into any check."],
-          ["No participation tracking", "Once your child joins a club, that’s between you and the club. We never track attendance, dropout or any child’s participation."],
-        ].map(([h, b]) => (
-          <div key={h} style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 14, fontWeight: 700 }}>{h}</div>
-            <div style={{ fontSize: 13.5, color: C.inkSoft, marginTop: 3, lineHeight: 1.55 }}>{b}</div>
-          </div>
-        ))}
-        <div style={{ fontSize: 11.5, color: C.inkSoft, lineHeight: 1.5, marginTop: 4 }}>
-          This is a proposed scheme. The data-sharing arrangement between Sport Ireland and the Department of
-          Social Protection is an assumption of the concept.
-        </div>
-      </div>
-    </div>
-  );
+function PrivacyModal(_ref14) {
+  var onClose = _ref14.onClose;
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClose,
+    style: {
+      position: "absolute",
+      inset: 0,
+      background: "rgba(10,69,48,.45)",
+      display: "flex",
+      alignItems: "flex-end",
+      zIndex: 20
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rise",
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    },
+    style: {
+      background: C.white,
+      borderRadius: "20px 20px 0 0",
+      padding: "22px 22px 26px",
+      width: "100%",
+      maxHeight: "80%",
+      overflowY: "auto"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      fontSize: 19,
+      fontWeight: 800,
+      margin: 0
+    }
+  }, "How we use your data"), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      border: "none",
+      background: C.mist,
+      borderRadius: 999,
+      width: 30,
+      height: 30,
+      fontSize: 16,
+      fontWeight: 700,
+      color: C.inkSoft
+    }
+  }, "\xD7")), [["What we collect", "Only your Yes/No eligibility result, a rough location (county or Eircode) and your child’s age group."], ["What we never collect", "No income figures, no PPSN, no medical card number, no name or details of your child."], ["The check is on you, not your child", "MyGovID confirms your own qualifying status with the Department of Social Protection. Your child is only the beneficiary and is never entered into any check."], ["No participation tracking", "Once your child joins a club, that’s between you and the club. We never track attendance, dropout or any child’s participation."]].map(function (_ref15) {
+    var _ref16 = _slicedToArray(_ref15, 2),
+      h = _ref16[0],
+      b = _ref16[1];
+    return /*#__PURE__*/React.createElement("div", {
+      key: h,
+      style: {
+        marginBottom: 14
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 14,
+        fontWeight: 700
+      }
+    }, h), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13.5,
+        color: C.inkSoft,
+        marginTop: 3,
+        lineHeight: 1.55
+      }
+    }, b));
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      color: C.inkSoft,
+      lineHeight: 1.5,
+      marginTop: 4
+    }
+  }, "This is a proposed scheme. The data-sharing arrangement between Sport Ireland and the Department of Social Protection is an assumption of the concept.")));
 }
 
 // --------------------------------------------------------------------------- Demo bar (prototype only)
 
-function DemoBar({ screen, demoOutcome, setDemoOutcome, go }) {
-  return (
-    <div style={{ position: "sticky", bottom: 0, borderTop: `1px solid ${C.line}`, background: "rgba(255,255,255,.94)", backdropFilter: "blur(8px)", padding: "10px 16px", display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-      <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", color: C.coral }}>Demo</span>
-      <div style={{ display: "flex", background: C.mist, borderRadius: 999, padding: 3 }}>
-        {["eligible", "ineligible"].map((o) => (
-          <button key={o} onClick={() => setDemoOutcome(o)}
-            style={{ border: "none", background: demoOutcome === o ? C.pine : "transparent", color: demoOutcome === o ? C.white : C.inkSoft, borderRadius: 999, padding: "6px 12px", fontSize: 12, fontWeight: 700 }}>
-            {o === "eligible" ? "Qualifies" : "Doesn’t"}
-          </button>
-        ))}
-      </div>
-      <button onClick={() => go("club")} style={{ marginLeft: "auto", border: `1.5px solid ${C.line}`, background: C.white, color: C.pine, borderRadius: 999, padding: "6px 12px", fontSize: 12, fontWeight: 700 }}>
-        Club portal
-      </button>
-      {screen !== "landing" && (
-        <button onClick={() => go("landing")} style={{ border: `1.5px solid ${C.line}`, background: C.white, color: C.inkSoft, borderRadius: 999, padding: "6px 12px", fontSize: 12, fontWeight: 700 }}>
-          Restart
-        </button>
-      )}
-    </div>
-  );
+function DemoBar(_ref17) {
+  var screen = _ref17.screen,
+    demoOutcome = _ref17.demoOutcome,
+    setDemoOutcome = _ref17.setDemoOutcome,
+    go = _ref17.go;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "sticky",
+      bottom: 0,
+      borderTop: "1px solid ".concat(C.line),
+      background: "rgba(255,255,255,.94)",
+      backdropFilter: "blur(8px)",
+      padding: "10px 16px",
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+      flexWrap: "wrap"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 10.5,
+      fontWeight: 800,
+      letterSpacing: ".08em",
+      textTransform: "uppercase",
+      color: C.coral
+    }
+  }, "Demo"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      background: C.mist,
+      borderRadius: 999,
+      padding: 3
+    }
+  }, ["eligible", "ineligible"].map(function (o) {
+    return /*#__PURE__*/React.createElement("button", {
+      key: o,
+      onClick: function onClick() {
+        return setDemoOutcome(o);
+      },
+      style: {
+        border: "none",
+        background: demoOutcome === o ? C.pine : "transparent",
+        color: demoOutcome === o ? C.white : C.inkSoft,
+        borderRadius: 999,
+        padding: "6px 12px",
+        fontSize: 12,
+        fontWeight: 700
+      }
+    }, o === "eligible" ? "Qualifies" : "Doesn’t");
+  })), /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return go("club");
+    },
+    style: {
+      marginLeft: "auto",
+      border: "1.5px solid ".concat(C.line),
+      background: C.white,
+      color: C.pine,
+      borderRadius: 999,
+      padding: "6px 12px",
+      fontSize: 12,
+      fontWeight: 700
+    }
+  }, "Club portal"), screen !== "landing" && /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick() {
+      return go("landing");
+    },
+    style: {
+      border: "1.5px solid ".concat(C.line),
+      background: C.white,
+      color: C.inkSoft,
+      borderRadius: 999,
+      padding: "6px 12px",
+      fontSize: 12,
+      fontWeight: 700
+    }
+  }, "Restart"));
 }
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(Sport4All));
+};
+</script>
 
-
-ReactDOM.createRoot(document.getElementById('root')).render(<Sport4All />);
+<script>
+(function () {
+  function boot(msg){ document.getElementById('root').innerHTML = '<div class="boot">' + msg + '</div>'; }
+  function fail(reason){
+    boot('<b>Couldn\'t start the prototype.</b><br><br>' + reason +
+      '<br><br>This page needs an internet connection to load React. If you are online and it still fails, ' +
+      'your network may be blocking unpkg.com and jsdelivr.net — try the hosted link instead.');
+  }
+  function loadOne(urls, done){
+    var i = 0;
+    (function attempt(){
+      if (i >= urls.length){ done(new Error('sources failed')); return; }
+      var s = document.createElement('script');
+      s.src = urls[i++];
+      s.onload = function(){ done(null); };
+      s.onerror = function(){ attempt(); };
+      document.head.appendChild(s);
+    })();
+  }
+  function loadAll(list, done){
+    (function next(i){
+      if (i >= list.length){ done(null); return; }
+      loadOne(list[i], function(err){ if (err){ done(err); return; } next(i+1); });
+    })(0);
+  }
+  var libs = [
+    ['https://unpkg.com/react@18/umd/react.production.min.js',
+     'https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js'],
+    ['https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
+     'https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js']
+  ];
+  var watchdog = setTimeout(function(){ fail('Loading React timed out.'); }, 15000);
+  loadAll(libs, function(err){
+    clearTimeout(watchdog);
+    if (err || typeof React === 'undefined' || typeof ReactDOM === 'undefined'){ fail('React did not load.'); return; }
+    try { window.__boot(); }
+    catch (e){ fail('The app failed to run: ' + (e && e.message ? e.message : e)); }
+  });
+  window.addEventListener('error', function(e){
+    if (document.querySelector('#root .boot')) fail('Error: ' + (e.message || 'unknown'));
+  });
+})();
 </script>
 </body>
 </html>
