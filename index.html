@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Sport4All — concept prototype</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #F4F8F5; }
+  #root { min-height: 100vh; }
+  .boot { font-family: system-ui, sans-serif; color: #4A5B52; text-align: center; padding: 80px 20px; }
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<div id="root"><div class="boot">Loading Sport4All…</div></div>
+<script type="text/babel" data-presets="react">
+const { useState, useEffect } = React;
+
+// ---------------------------------------------------------------------------
+// Sport4All — concept prototype (V3, parent-verified, percentage-with-cap)
+// A proposed Sport Ireland scheme delivered with Local Sports Partnerships.
+// Eligibility is checked on the PARENT's own status via MyGovID. The child is
+// never entered into the check and no child participation is ever tracked.
+// Demo-only: the MyGovID / DSP status check is simulated. Use the toggle at the
+// foot of the screen to demonstrate the eligible and ineligible paths.
+// ---------------------------------------------------------------------------
+
+const FEE_CAP = 150;          // € per child per season (placeholder — set by scheme)
+const SUBSIDY_PCT = 90;       // % of fee covered, up to the cap
+
+const C = {
+  ink: "#16261F",
+  inkSoft: "#4A5B52",
+  pine: "#0F5C3F",
+  pineDeep: "#0A4530",
+  amber: "#E8973A",
+  amberSoft: "#FBEAD2",
+  mist: "#EDF3EF",
+  line: "#DDE7E0",
+  white: "#FFFFFF",
+  bg: "#F4F8F5",
+  coral: "#C7502F",
+};
+
+const COUNTIES = ["Carlow","Cavan","Clare","Cork","Donegal","Dublin","Galway","Kerry","Kildare","Kilkenny","Laois","Leitrim","Limerick","Longford","Louth","Mayo","Meath","Monaghan","Offaly","Roscommon","Sligo","Tipperary","Waterford","Westmeath","Wexford","Wicklow"];
+const AGE_BANDS = ["Under 8","Under 10","Under 12","Under 14","Under 16","Under 18"];
+
+function makeCode() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const block = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+  return `${block()}-${block()}`;
+}
+function expiryDate() {
+  const d = new Date();
+  d.setDate(d.getDate() + 90);
+  return d.toLocaleDateString("en-IE", { day: "numeric", month: "long", year: "numeric" });
+}
+
+// Open real, always-resolving destinations so nothing dead-ends.
+function openUrl(url) { try { window.open(url, "_blank", "noopener,noreferrer"); } catch (e) {} }
+function mapsSearch(q) { openUrl("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q)); }
+function webSearch(q) { openUrl("https://www.google.com/search?q=" + encodeURIComponent(q)); }
+
+function Sport4All() {
+  const [screen, setScreen] = useState("landing");     // landing | consent | checking | result | options | club
+  const [demoOutcome, setDemoOutcome] = useState("eligible"); // eligible | ineligible
+  const [eligible, setEligible] = useState(null);
+  const [code, setCode] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [county, setCounty] = useState("");
+  const [ageBand, setAgeBand] = useState("");
+  const [privacyOpen, setPrivacyOpen] = useState(false);
+
+  const expiry = expiryDate();
+
+  useEffect(() => {
+    if (screen !== "checking") return;
+    const t = setTimeout(() => {
+      const ok = demoOutcome === "eligible";
+      setEligible(ok);
+      if (ok) setCode(makeCode());
+      setScreen("result");
+    }, 1600);
+    return () => clearTimeout(t);
+  }, [screen, demoOutcome]);
+
+  const go = (s) => { setCopied(false); setScreen(s); };
+
+  return (
+    <div style={{ minHeight: "100vh", background: C.bg, display: "flex", justifyContent: "center", color: C.ink }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        .s4a { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+        .s4a button { font-family: inherit; cursor: pointer; }
+        .s4a button:focus-visible, .s4a a:focus-visible, .s4a select:focus-visible { outline: 3px solid ${C.amber}; outline-offset: 2px; }
+        .btn-primary { transition: transform .12s ease, filter .12s ease; }
+        .btn-primary:hover { filter: brightness(1.06); }
+        .btn-primary:active { transform: translateY(1px); }
+        .card-tap { transition: border-color .15s ease, transform .12s ease, box-shadow .15s ease; }
+        .card-tap:hover { border-color: ${C.pine}; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,92,63,.10); }
+        .link-u { text-decoration: underline; text-underline-offset: 3px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        .rise { animation: rise .35s ease both; }
+        @media (prefers-reduced-motion: reduce) { .rise, .btn-primary, .card-tap { animation: none; transition: none; } }
+      `}</style>
+
+      <div className="s4a" style={{ width: "100%", maxWidth: 430, minHeight: "100vh", background: C.white, display: "flex", flexDirection: "column", position: "relative", boxShadow: "0 0 60px rgba(10,69,48,.06)" }}>
+
+        {screen === "landing" && <Landing go={go} openPrivacy={() => setPrivacyOpen(true)} />}
+        {screen === "consent" && <Consent go={go} />}
+        {screen === "checking" && <Checking />}
+        {screen === "result" && (
+          eligible
+            ? <ResultEligible code={code} expiry={expiry} copied={copied} setCopied={setCopied} go={go} />
+            : <ResultIneligible go={go} />
+        )}
+        {screen === "options" && <Options county={county} setCounty={setCounty} ageBand={ageBand} setAgeBand={setAgeBand} go={go} />}
+        {screen === "club" && <ClubPortal go={go} />}
+
+        {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
+
+        <DemoBar screen={screen} demoOutcome={demoOutcome} setDemoOutcome={setDemoOutcome} go={go} />
+      </div>
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------- shared bits
+
+function Brand({ small }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div style={{ width: small ? 28 : 34, height: small ? 28 : 34, borderRadius: 10, background: C.pine, display: "grid", placeItems: "center", flexShrink: 0 }}>
+        <svg width={small ? 16 : 19} height={small ? 16 : 19} viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke={C.white} strokeWidth="2" />
+          <path d="M12 3v18M3 12h18" stroke={C.white} strokeWidth="1.4" opacity=".5" />
+          <path d="M12 7l1.6 3.3 3.6.5-2.6 2.5.6 3.6L12 15.7 8.8 17.4l.6-3.6L6.8 11.3l3.6-.5L12 7z" fill={C.amber} />
+        </svg>
+      </div>
+      <div>
+        <div style={{ fontWeight: 800, fontSize: small ? 16 : 19, letterSpacing: "-.02em" }}>Sport4All</div>
+        {!small && <div style={{ fontSize: 11, color: C.inkSoft, fontWeight: 500 }}>Sport Ireland · with your Local Sports Partnership</div>}
+      </div>
+    </div>
+  );
+}
+
+function PrimaryButton({ children, onClick, style }) {
+  return (
+    <button className="btn-primary" onClick={onClick}
+      style={{ width: "100%", background: C.pine, color: C.white, border: "none", borderRadius: 14, padding: "16px 18px", fontSize: 16, fontWeight: 700, ...style }}>
+      {children}
+    </button>
+  );
+}
+
+function Header({ go, back }) {
+  return (
+    <div style={{ padding: "18px 22px 8px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <Brand small />
+      {back && (
+        <button onClick={() => go(back)} style={{ background: "none", border: "none", color: C.inkSoft, fontSize: 14, fontWeight: 600 }}>
+          ← Back
+        </button>
+      )}
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------- Screen 1: Landing
+
+function Landing({ go, openPrivacy }) {
+  return (
+    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <div style={{ padding: "26px 22px 0" }}><Brand /></div>
+
+      <div style={{ padding: "26px 22px 0" }}>
+        <h1 style={{ fontSize: 27, lineHeight: 1.15, fontWeight: 800, letterSpacing: "-.03em", margin: 0 }}>
+          Get your child into a local sports club.
+        </h1>
+        <p style={{ fontSize: 15.5, lineHeight: 1.55, color: C.inkSoft, marginTop: 14 }}>
+          This scheme helps with the cost of getting your child playing. If you qualify, most of the club
+          membership fee is covered. The check takes under a minute.
+        </p>
+      </div>
+
+      <div style={{ margin: "22px 22px 0", background: C.mist, borderRadius: 16, padding: "16px 18px" }}>
+        {[
+          "No paperwork, no income details",
+          "We check your status, never your child’s",
+          "Your club never sees your details",
+        ].map((t) => (
+          <div key={t} style={{ display: "flex", gap: 11, alignItems: "flex-start", padding: "7px 0" }}>
+            <Tick />
+            <span style={{ fontSize: 14.5, fontWeight: 600 }}>{t}</span>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ padding: "24px 22px 0", marginTop: "auto" }}>
+        <PrimaryButton onClick={() => go("consent")}>
+          Check if you qualify — sign in with MyGovID
+        </PrimaryButton>
+        <button onClick={() => go("options")}
+          style={{ width: "100%", background: "none", border: "none", color: C.pine, fontSize: 15, fontWeight: 700, padding: "16px 0 4px" }}
+          className="link-u">
+          Just show me clubs near me
+        </button>
+      </div>
+
+      <div style={{ padding: "16px 22px 24px", borderTop: `1px solid ${C.line}`, marginTop: 18, display: "flex", flexWrap: "wrap", gap: "6px 16px" }}>
+        {[
+          { t: "Your Local Sports Partnership", fn: () => webSearch("Local Sports Partnership Ireland find your LSP") },
+          { t: "Citizens Information", fn: () => openUrl("https://www.citizensinformation.ie") },
+          { t: "How we use your data", fn: openPrivacy },
+        ].map(({ t, fn }) => (
+          <button key={t} onClick={fn} className="link-u"
+            style={{ fontSize: 12, color: C.inkSoft, fontWeight: 600, background: "none", border: "none", padding: 0 }}>
+            {t}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Tick() {
+  return (
+    <div style={{ width: 20, height: 20, borderRadius: 999, background: C.pine, display: "grid", placeItems: "center", flexShrink: 0, marginTop: 1 }}>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 6" stroke={C.white} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------- Screen 2: Consent
+
+function Consent({ go }) {
+  return (
+    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <Header go={go} back="landing" />
+      <div style={{ padding: "18px 22px 0" }}>
+        <div style={{ width: 46, height: 46, borderRadius: 13, background: C.amberSoft, display: "grid", placeItems: "center", marginBottom: 18 }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V5l7-3z" stroke={C.amber} strokeWidth="2" strokeLinejoin="round" /><path d="M9 12l2 2 4-4" stroke={C.amber} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </div>
+        <h2 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-.02em", margin: 0 }}>Your consent</h2>
+        <p style={{ fontSize: 15, lineHeight: 1.6, color: C.inkSoft, marginTop: 14 }}>
+          To check if you qualify, we’ll confirm with the Department of Social Protection whether you hold a
+          qualifying payment or card. We only receive a simple <strong style={{ color: C.ink }}>Yes or No</strong>.
+        </p>
+        <p style={{ fontSize: 15, lineHeight: 1.6, color: C.inkSoft, marginTop: 12 }}>
+          We never see your income, and your child’s details are never part of this check.
+        </p>
+      </div>
+
+      <div style={{ padding: "22px 22px 0", marginTop: "auto" }}>
+        <PrimaryButton onClick={() => go("checking")}>I agree — check now</PrimaryButton>
+        <p style={{ fontSize: 11.5, lineHeight: 1.5, color: C.inkSoft, marginTop: 16, padding: "0 2px" }}>
+          This is a proposed scheme. The data-sharing arrangement between Sport Ireland and the Department of
+          Social Protection is an assumption of the concept and is not yet in place.
+        </p>
+      </div>
+      <div style={{ height: 20 }} />
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------- Checking state
+
+function Checking() {
+  return (
+    <div style={{ flex: 1, display: "grid", placeItems: "center", padding: 40 }}>
+      <div style={{ textAlign: "center" }}>
+        <div style={{ width: 44, height: 44, border: `4px solid ${C.mist}`, borderTopColor: C.pine, borderRadius: 999, margin: "0 auto 20px", animation: "spin .8s linear infinite" }} />
+        <div style={{ fontSize: 16, fontWeight: 700 }}>Checking securely…</div>
+        <div style={{ fontSize: 13, color: C.inkSoft, marginTop: 6 }}>Confirming your status with MyGovID</div>
+      </div>
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------- Screen 3a: Eligible
+
+function ResultEligible({ code, expiry, copied, setCopied, go }) {
+  const copy = () => {
+    try { navigator.clipboard?.writeText(code); } catch (e) {}
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <Header go={go} />
+      <div style={{ padding: "8px 22px 0", textAlign: "center" }}>
+        <div style={{ width: 60, height: 60, borderRadius: 999, background: C.pine, display: "grid", placeItems: "center", margin: "6px auto 16px" }}>
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 6" stroke={C.white} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </div>
+        <h2 style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-.02em", margin: 0 }}>You qualify.</h2>
+        <p style={{ fontSize: 15, lineHeight: 1.55, color: C.inkSoft, marginTop: 10 }}>
+          This scheme covers up to <strong style={{ color: C.ink }}>{SUBSIDY_PCT}%</strong> of your child’s club
+          membership fee, to a maximum of <strong style={{ color: C.ink }}>€{FEE_CAP}</strong> per child per season.
+        </p>
+      </div>
+
+      {/* ticket */}
+      <div style={{ margin: "22px 22px 0", position: "relative" }}>
+        <div style={{ background: C.pineDeep, borderRadius: 18, padding: "22px 22px 20px", color: C.white }}>
+          <div style={{ fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", opacity: .7, fontWeight: 700 }}>Your fee-support code</div>
+          <div style={{ fontSize: 30, fontWeight: 800, letterSpacing: ".06em", marginTop: 8, fontVariantNumeric: "tabular-nums" }}>{code}</div>
+          <div style={{ borderTop: `1px dashed rgba(255,255,255,.28)`, margin: "16px 0", position: "relative" }} />
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5, opacity: .85 }}>
+            <span>Covers up to {SUBSIDY_PCT}% · max €{FEE_CAP}</span>
+            <span>Expires {expiry}</span>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ padding: "18px 22px 0" }}>
+        <button className="btn-primary" onClick={copy}
+          style={{ width: "100%", background: copied ? C.mist : C.amber, color: copied ? C.pine : "#3A2200", border: "none", borderRadius: 14, padding: "14px", fontSize: 15, fontWeight: 700 }}>
+          {copied ? "Copied ✓" : "Copy code"}
+        </button>
+      </div>
+
+      <div style={{ margin: "22px 22px 0", background: C.mist, borderRadius: 16, padding: "18px" }}>
+        <div style={{ fontSize: 13, fontWeight: 800, textTransform: "uppercase", letterSpacing: ".08em", color: C.inkSoft, marginBottom: 12 }}>How it works</div>
+        {[
+          "Find a participating local club your child wants to join.",
+          "Give this code to the club.",
+          "The club applies it to your child’s fee and claims the balance through the scheme.",
+        ].map((t, i) => (
+          <div key={i} style={{ display: "flex", gap: 12, padding: "6px 0", alignItems: "flex-start" }}>
+            <div style={{ width: 22, height: 22, borderRadius: 999, background: C.pine, color: C.white, fontSize: 12, fontWeight: 800, display: "grid", placeItems: "center", flexShrink: 0 }}>{i + 1}</div>
+            <span style={{ fontSize: 14.5, lineHeight: 1.45 }}>{t}</span>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ padding: "18px 22px 26px", marginTop: "auto" }}>
+        <div style={{ background: C.mist, borderRadius: 16, padding: "16px 18px" }}>
+          <div style={{ fontSize: 15, fontWeight: 800 }}>Now find the right club</div>
+          <div style={{ fontSize: 13.5, color: C.inkSoft, marginTop: 4, lineHeight: 1.5 }}>
+            Fee support is one part. Free taster sessions, welcoming clubs and gear swaps near you help with
+            the rest of getting started.
+          </div>
+          <button className="btn-primary" onClick={() => go("options")}
+            style={{ width: "100%", marginTop: 14, background: C.pine, color: C.white, border: "none", borderRadius: 12, padding: "13px", fontSize: 14.5, fontWeight: 700 }}>
+            Show clubs and sessions near me
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------- Screen 3b: Ineligible
+
+function ResultIneligible({ go }) {
+  return (
+    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <Header go={go} />
+      <div style={{ padding: "10px 22px 0" }}>
+        <div style={{ width: 56, height: 56, borderRadius: 16, background: C.amberSoft, display: "grid", placeItems: "center", marginBottom: 18 }}>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke={C.amber} strokeWidth="2" /><path d="M12 8v5M8 12h8" stroke={C.amber} strokeWidth="2" strokeLinecap="round" /></svg>
+        </div>
+        <h2 style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-.02em", margin: 0, lineHeight: 1.15 }}>
+          Here’s how to get your child playing near you.
+        </h2>
+        <p style={{ fontSize: 15, lineHeight: 1.6, color: C.inkSoft, marginTop: 12 }}>
+          You don’t qualify for fee support right now, but there’s plenty near you, whatever your budget.
+        </p>
+      </div>
+      <div style={{ padding: "24px 22px 0", marginTop: "auto" }}>
+        <PrimaryButton onClick={() => go("options")}>See what’s near me</PrimaryButton>
+      </div>
+      <div style={{ height: 24 }} />
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------- Screen 4: Options
+
+function Options({ county, setCounty, ageBand, setAgeBand, go }) {
+  const kildare = county === "Kildare";
+  const place = county || "Ireland";
+  const ageBit = ageBand ? ` ${ageBand.toLowerCase()}` : "";
+
+  const searchClubs = () =>
+    mapsSearch(county ? `children's sports clubs${ageBit} in ${county}, Ireland` : "children's sports clubs near me");
+
+  const cards = [
+    {
+      title: "Talk to your local sports coordinator",
+      body: "Connect with your Local Sports Partnership about clubs and support in your area.",
+      icon: "chat",
+      action: () => webSearch(`${county ? county + " " : ""}Local Sports Partnership contact`),
+    },
+    {
+      title: "Free community taster sessions",
+      body: kildare
+        ? "Free sessions run by Kildare Sports Partnership. Nearest Community Sport Hubs are in Athy and Monasterevin — there isn’t one in every town, so we show the closest to you."
+        : county
+          ? `Free sessions run by your Local Sports Partnership in ${county}. If your town has none, we’ll show the nearest.`
+          : "Free sessions run by your Local Sports Partnership. If your town has none, we’ll show the nearest.",
+      icon: "run",
+      action: () => kildare
+        ? mapsSearch("Community Sport Hub Athy Monasterevin Kildare")
+        : webSearch(`${county ? county + " " : ""}Sports Partnership community sport hub taster sessions`),
+    },
+    {
+      title: "Inclusive clubs & gear swaps",
+      body: "Welcoming clubs and second-hand kit networks near you, so cost of gear isn’t a barrier either.",
+      icon: "swap",
+      action: () => mapsSearch(`inclusive sports clubs and second-hand kit in ${place}`),
+    },
+    {
+      title: "Citizens Information",
+      body: "Broader guidance on financial supports you might be missing, with a local phone number.",
+      icon: "info",
+      action: () => openUrl("https://www.citizensinformation.ie"),
+    },
+  ];
+
+  return (
+    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <Header go={go} back="landing" />
+      <div style={{ padding: "10px 22px 0" }}>
+        <h2 style={{ fontSize: 23, fontWeight: 800, letterSpacing: "-.02em", margin: 0 }}>Clubs and sessions near you</h2>
+        <p style={{ fontSize: 14.5, color: C.inkSoft, marginTop: 8, lineHeight: 1.5 }}>
+          Tell us where you are so we can show the closest options.
+        </p>
+      </div>
+
+      <div style={{ padding: "16px 22px 0", display: "flex", gap: 10 }}>
+        <Field label="County">
+          <select value={county} onChange={(e) => setCounty(e.target.value)} style={selectStyle}>
+            <option value="">Select…</option>
+            {COUNTIES.map((c) => <option key={c}>{c}</option>)}
+          </select>
+        </Field>
+        <Field label="Child’s age">
+          <select value={ageBand} onChange={(e) => setAgeBand(e.target.value)} style={selectStyle}>
+            <option value="">Select…</option>
+            {AGE_BANDS.map((a) => <option key={a}>{a}</option>)}
+          </select>
+        </Field>
+      </div>
+
+      <div style={{ padding: "14px 22px 0" }}>
+        <PrimaryButton onClick={searchClubs} style={{ padding: "14px", fontSize: 15 }}>
+          {county ? `Show clubs in ${county}` : "Show clubs near me"}
+        </PrimaryButton>
+      </div>
+
+      <div style={{ padding: "12px 22px 6px" }}>
+        <div style={{ fontSize: 12, fontWeight: 800, textTransform: "uppercase", letterSpacing: ".08em", color: C.inkSoft }}>Or get help another way</div>
+      </div>
+
+      <div style={{ padding: "6px 22px 26px", display: "flex", flexDirection: "column", gap: 12 }}>
+        {cards.map((c) => (
+          <button key={c.title} className="card-tap" onClick={c.action}
+            style={{ textAlign: "left", background: C.white, border: `1.5px solid ${C.line}`, borderRadius: 16, padding: "16px 16px", display: "flex", gap: 14, alignItems: "flex-start", width: "100%" }}>
+            <div style={{ width: 40, height: 40, borderRadius: 11, background: C.mist, display: "grid", placeItems: "center", flexShrink: 0 }}>
+              <OptIcon name={c.icon} />
+            </div>
+            <div>
+              <div style={{ fontSize: 15.5, fontWeight: 700, letterSpacing: "-.01em" }}>{c.title}</div>
+              <div style={{ fontSize: 13.5, color: C.inkSoft, marginTop: 4, lineHeight: 1.5 }}>{c.body}</div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ marginLeft: "auto", marginTop: 4, flexShrink: 0 }}><path d="M9 6l6 6-6 6" stroke={C.inkSoft} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Field({ label, children }) {
+  return (
+    <label style={{ flex: 1 }}>
+      <div style={{ fontSize: 12, fontWeight: 700, color: C.inkSoft, marginBottom: 6 }}>{label}</div>
+      {children}
+    </label>
+  );
+}
+const selectStyle = { width: "100%", padding: "12px 12px", borderRadius: 12, border: `1.5px solid ${C.line}`, fontSize: 14.5, fontWeight: 600, background: C.white, color: C.ink, fontFamily: "inherit", appearance: "none" };
+
+function OptIcon({ name }) {
+  const s = { stroke: C.pine, strokeWidth: 2, fill: "none", strokeLinecap: "round", strokeLinejoin: "round" };
+  if (name === "chat") return <svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 3v-3H4z" {...s} /></svg>;
+  if (name === "run") return <svg width="20" height="20" viewBox="0 0 24 24"><circle cx="15" cy="4.5" r="1.8" {...s} /><path d="M13 9l-3 3 2 3-1 5M13 9l4 1 2 3M13 9L8 8" {...s} /></svg>;
+  if (name === "swap") return <svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3" {...s} /></svg>;
+  return <svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" {...s} /><path d="M12 11v5M12 8h.01" {...s} /></svg>;
+}
+
+// --------------------------------------------------------------------------- Screen 5: Club portal
+
+function ClubPortal({ go }) {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [enteredCode, setEnteredCode] = useState("");
+  const [fee, setFee] = useState("");
+  const [result, setResult] = useState(null);
+
+  const redeem = () => {
+    const f = parseFloat(fee);
+    if (!enteredCode.trim() || !f || f <= 0) return;
+    const covered = Math.min(f * (SUBSIDY_PCT / 100), FEE_CAP);
+    setResult({ fee: f, covered: Math.round(covered * 100) / 100, balance: Math.round((f - covered) * 100) / 100 });
+  };
+
+  if (!loggedIn) {
+    return (
+      <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        <Header go={go} back="landing" />
+        <div style={{ padding: "14px 22px 0" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, letterSpacing: ".1em", textTransform: "uppercase" }}>Club portal</div>
+          <h2 style={{ fontSize: 23, fontWeight: 800, letterSpacing: "-.02em", margin: "6px 0 0" }}>Club sign in</h2>
+          <p style={{ fontSize: 14, color: C.inkSoft, marginTop: 8 }}>For participating clubs to redeem family codes.</p>
+        </div>
+        <div style={{ padding: "20px 22px 0", display: "flex", flexDirection: "column", gap: 12 }}>
+          <TextField label="Club email" placeholder="secretary@yourclub.ie" />
+          <TextField label="Password" placeholder="••••••••" type="password" />
+        </div>
+        <div style={{ padding: "20px 22px 0", marginTop: "auto" }}>
+          <PrimaryButton onClick={() => setLoggedIn(true)}>Sign in</PrimaryButton>
+        </div>
+        <div style={{ height: 24 }} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="rise" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <Header go={go} back="landing" />
+      <div style={{ padding: "10px 22px 0" }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, letterSpacing: ".1em", textTransform: "uppercase" }}>Club portal</div>
+        <h2 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-.02em", margin: "6px 0 0" }}>Redeem a code</h2>
+      </div>
+
+      <div style={{ padding: "16px 22px 0", display: "flex", flexDirection: "column", gap: 12 }}>
+        <TextField label="Family’s code" placeholder="XXXX-XXXX" value={enteredCode} onChange={setEnteredCode} mono />
+        <TextField label="Child’s membership fee (€)" placeholder="e.g. 120" value={fee} onChange={setFee} type="number" />
+        <PrimaryButton onClick={redeem} style={{ padding: "14px", fontSize: 15 }}>Apply code</PrimaryButton>
+      </div>
+
+      {result && (
+        <div className="rise" style={{ margin: "18px 22px 0", border: `1.5px solid ${C.pine}`, borderRadius: 16, overflow: "hidden" }}>
+          <Row label="Membership fee" value={`€${result.fee.toFixed(2)}`} />
+          <Row label={`Covered by scheme (up to ${SUBSIDY_PCT}%, max €${FEE_CAP})`} value={`− €${result.covered.toFixed(2)}`} accent />
+          <div style={{ display: "flex", justifyContent: "space-between", padding: "14px 16px", background: C.pine, color: C.white }}>
+            <span style={{ fontWeight: 700, fontSize: 14 }}>Balance the club claims</span>
+            <span style={{ fontWeight: 800, fontSize: 16 }}>€{result.covered.toFixed(2)}</span>
+          </div>
+        </div>
+      )}
+      <div style={{ margin: "8px 22px 0", fontSize: 11.5, color: C.inkSoft, lineHeight: 1.5 }}>
+        Fees are capped to prevent inflation of stated fees. The family pays the remaining €{result ? result.balance.toFixed(2) : "—"}.
+      </div>
+
+      {/* dashboard */}
+      <div style={{ padding: "20px 22px 26px", marginTop: "auto" }}>
+        <div style={{ fontSize: 12, fontWeight: 800, textTransform: "uppercase", letterSpacing: ".08em", color: C.inkSoft, marginBottom: 12 }}>This season</div>
+        <div style={{ display: "flex", gap: 10 }}>
+          <Tile n="24" label="Codes redeemed" />
+          <Tile n="21" label="Families supported" />
+        </div>
+        <div style={{ marginTop: 10, background: C.amberSoft, borderRadius: 14, padding: "16px 18px", border: `1.5px solid ${C.amber}` }}>
+          <div style={{ fontSize: 30, fontWeight: 800, color: C.coral, lineHeight: 1 }}>38</div>
+          <div style={{ fontSize: 13, fontWeight: 700, marginTop: 6 }}>Cost-barrier flags in your area this season</div>
+          <div style={{ fontSize: 11.5, color: C.inkSoft, marginTop: 4, lineHeight: 1.45 }}>
+            The demand signal — anonymised, for your LSP’s funding case. No child is ever named or tracked.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TextField({ label, placeholder, value, onChange, type = "text", mono }) {
+  return (
+    <label>
+      <div style={{ fontSize: 12, fontWeight: 700, color: C.inkSoft, marginBottom: 6 }}>{label}</div>
+      <input type={type} placeholder={placeholder} value={value ?? ""} onChange={onChange ? (e) => onChange(e.target.value) : undefined}
+        style={{ width: "100%", padding: "13px 14px", borderRadius: 12, border: `1.5px solid ${C.line}`, fontSize: 15, fontWeight: 600, fontFamily: mono ? "ui-monospace, monospace" : "inherit", letterSpacing: mono ? ".08em" : "normal", color: C.ink, background: C.white }} />
+    </label>
+  );
+}
+function Row({ label, value, accent }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", padding: "13px 16px", borderBottom: `1px solid ${C.line}` }}>
+      <span style={{ fontSize: 13.5, color: C.inkSoft, fontWeight: 600, maxWidth: "70%" }}>{label}</span>
+      <span style={{ fontSize: 14.5, fontWeight: 700, color: accent ? C.pine : C.ink }}>{value}</span>
+    </div>
+  );
+}
+function Tile({ n, label }) {
+  return (
+    <div style={{ flex: 1, background: C.mist, borderRadius: 14, padding: "16px 14px" }}>
+      <div style={{ fontSize: 28, fontWeight: 800, color: C.pine, lineHeight: 1 }}>{n}</div>
+      <div style={{ fontSize: 12.5, fontWeight: 600, color: C.inkSoft, marginTop: 6 }}>{label}</div>
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------- Privacy note
+
+function PrivacyModal({ onClose }) {
+  return (
+    <div onClick={onClose}
+      style={{ position: "absolute", inset: 0, background: "rgba(10,69,48,.45)", display: "flex", alignItems: "flex-end", zIndex: 20 }}>
+      <div className="rise" onClick={(e) => e.stopPropagation()}
+        style={{ background: C.white, borderRadius: "20px 20px 0 0", padding: "22px 22px 26px", width: "100%", maxHeight: "80%", overflowY: "auto" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+          <h3 style={{ fontSize: 19, fontWeight: 800, margin: 0 }}>How we use your data</h3>
+          <button onClick={onClose} style={{ border: "none", background: C.mist, borderRadius: 999, width: 30, height: 30, fontSize: 16, fontWeight: 700, color: C.inkSoft }}>×</button>
+        </div>
+        {[
+          ["What we collect", "Only your Yes/No eligibility result, a rough location (county or Eircode) and your child’s age group."],
+          ["What we never collect", "No income figures, no PPSN, no medical card number, no name or details of your child."],
+          ["The check is on you, not your child", "MyGovID confirms your own qualifying status with the Department of Social Protection. Your child is only the beneficiary and is never entered into any check."],
+          ["No participation tracking", "Once your child joins a club, that’s between you and the club. We never track attendance, dropout or any child’s participation."],
+        ].map(([h, b]) => (
+          <div key={h} style={{ marginBottom: 14 }}>
+            <div style={{ fontSize: 14, fontWeight: 700 }}>{h}</div>
+            <div style={{ fontSize: 13.5, color: C.inkSoft, marginTop: 3, lineHeight: 1.55 }}>{b}</div>
+          </div>
+        ))}
+        <div style={{ fontSize: 11.5, color: C.inkSoft, lineHeight: 1.5, marginTop: 4 }}>
+          This is a proposed scheme. The data-sharing arrangement between Sport Ireland and the Department of
+          Social Protection is an assumption of the concept.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------- Demo bar (prototype only)
+
+function DemoBar({ screen, demoOutcome, setDemoOutcome, go }) {
+  return (
+    <div style={{ position: "sticky", bottom: 0, borderTop: `1px solid ${C.line}`, background: "rgba(255,255,255,.94)", backdropFilter: "blur(8px)", padding: "10px 16px", display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+      <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", color: C.coral }}>Demo</span>
+      <div style={{ display: "flex", background: C.mist, borderRadius: 999, padding: 3 }}>
+        {["eligible", "ineligible"].map((o) => (
+          <button key={o} onClick={() => setDemoOutcome(o)}
+            style={{ border: "none", background: demoOutcome === o ? C.pine : "transparent", color: demoOutcome === o ? C.white : C.inkSoft, borderRadius: 999, padding: "6px 12px", fontSize: 12, fontWeight: 700 }}>
+            {o === "eligible" ? "Qualifies" : "Doesn’t"}
+          </button>
+        ))}
+      </div>
+      <button onClick={() => go("club")} style={{ marginLeft: "auto", border: `1.5px solid ${C.line}`, background: C.white, color: C.pine, borderRadius: 999, padding: "6px 12px", fontSize: 12, fontWeight: 700 }}>
+        Club portal
+      </button>
+      {screen !== "landing" && (
+        <button onClick={() => go("landing")} style={{ border: `1.5px solid ${C.line}`, background: C.white, color: C.inkSoft, borderRadius: 999, padding: "6px 12px", fontSize: 12, fontWeight: 700 }}>
+          Restart
+        </button>
+      )}
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Sport4All />);
+</script>
+</body>
+</html>
