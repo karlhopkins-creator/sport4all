@@ -5,7 +5,7 @@ Sports Analytics, Technology and Innovation.
 
 **Challenge:** Inclusive Sports Technology Solutions
 **Focus area:** Artificial Intelligence and GenAI
-**Live:** https://karlhopkins-creator.github.io/sport4all/
+**Live:** https://sport4all-delta.vercel.app/ | https://karlhopkins-creator.github.io/sport4all/
 **Repo:** https://github.com/karlhopkins-creator/sport4all
 
 ## Problem
