@@ -50,5 +50,5 @@ Single self-contained HTML/React file, deployed on GitHub Pages. The platform
 build prompt used to generate this prototype is in `build-prompt.md`.
 
 ## Team
-Karl Hopkins — [email] — A00050660
-Kevin [surname] — [email] — [student number]
+Karl Hopkins —  A00050660@myTUDublin.ie — A00050660
+Kevin King — A00050668@myTUDublin.ie — A00050668
